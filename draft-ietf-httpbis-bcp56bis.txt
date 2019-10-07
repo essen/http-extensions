@@ -3,10 +3,10 @@
 
 
 HTTP Working Group                                         M. Nottingham
-Internet-Draft                                           October 2, 2019
+Internet-Draft                                           October 7, 2019
 Obsoletes: 3205 (if approved)
 Intended status: Best Current Practice
-Expires: April 4, 2020
+Expires: April 9, 2020
 
 
                       Building Protocols with HTTP
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 4, 2020.
+   This Internet-Draft will expire on April 9, 2020.
 
 
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Nottingham                Expires April 4, 2020                 [Page 1]
+Nottingham                Expires April 9, 2020                 [Page 1]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -78,44 +78,45 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   4
    2.  Is HTTP Being Used? . . . . . . . . . . . . . . . . . . . . .   4
+     2.1.  Non-HTTP Protocols  . . . . . . . . . . . . . . . . . . .   5
    3.  What's Important About HTTP . . . . . . . . . . . . . . . . .   5
-     3.1.  Generic Semantics . . . . . . . . . . . . . . . . . . . .   5
+     3.1.  Generic Semantics . . . . . . . . . . . . . . . . . . . .   6
      3.2.  Links . . . . . . . . . . . . . . . . . . . . . . . . . .   6
      3.3.  Rich Functionality  . . . . . . . . . . . . . . . . . . .   7
    4.  Best Practices for Using HTTP . . . . . . . . . . . . . . . .   8
      4.1.  Specifying the Use of HTTP  . . . . . . . . . . . . . . .   8
-     4.2.  Defining HTTP Resources . . . . . . . . . . . . . . . . .   9
-     4.3.  Specifying Client Behaviours  . . . . . . . . . . . . . .  10
-     4.4.  HTTP URLs . . . . . . . . . . . . . . . . . . . . . . . .  11
+     4.2.  Specifying Server Behaviour . . . . . . . . . . . . . . .   9
+     4.3.  Specifying Client Behaviour . . . . . . . . . . . . . . .  10
+     4.4.  Specifying URLs . . . . . . . . . . . . . . . . . . . . .  11
        4.4.1.  Initial URL Discovery . . . . . . . . . . . . . . . .  11
-       4.4.2.  URI Schemes . . . . . . . . . . . . . . . . . . . . .  12
-       4.4.3.  Transport Ports . . . . . . . . . . . . . . . . . . .  13
-     4.5.  HTTP Methods  . . . . . . . . . . . . . . . . . . . . . .  13
+       4.4.2.  URI Schemes . . . . . . . . . . . . . . . . . . . . .  11
+       4.4.3.  Transport Ports . . . . . . . . . . . . . . . . . . .  12
+     4.5.  Using HTTP Methods  . . . . . . . . . . . . . . . . . . .  13
        4.5.1.  GET . . . . . . . . . . . . . . . . . . . . . . . . .  13
        4.5.2.  OPTIONS . . . . . . . . . . . . . . . . . . . . . . .  14
-     4.6.  HTTP Status Codes . . . . . . . . . . . . . . . . . . . .  15
-       4.6.1.  Redirection . . . . . . . . . . . . . . . . . . . . .  17
-     4.7.  HTTP Header Fields  . . . . . . . . . . . . . . . . . . .  18
+     4.6.  Using HTTP Status Codes . . . . . . . . . . . . . . . . .  15
+       4.6.1.  Redirection . . . . . . . . . . . . . . . . . . . . .  16
+     4.7.  Specifying HTTP Header Fields . . . . . . . . . . . . . .  18
      4.8.  Defining Message Payloads . . . . . . . . . . . . . . . .  19
-     4.9.  HTTP Caching  . . . . . . . . . . . . . . . . . . . . . .  19
+     4.9.  Accommodating HTTP Caching  . . . . . . . . . . . . . . .  19
        4.9.1.  Freshness . . . . . . . . . . . . . . . . . . . . . .  19
        4.9.2.  Stale Responses . . . . . . . . . . . . . . . . . . .  20
        4.9.3.  Caching and Application Semantics . . . . . . . . . .  20
        4.9.4.  Varying Content Based Upon the Request  . . . . . . .  21
-     4.10. Application State . . . . . . . . . . . . . . . . . . . .  21
+     4.10. Handling Application State  . . . . . . . . . . . . . . .  21
      4.11. Client Authentication . . . . . . . . . . . . . . . . . .  22
      4.12. Co-Existing with Web Browsing . . . . . . . . . . . . . .  22
-     4.13. Application Boundaries  . . . . . . . . . . . . . . . . .  24
 
 
 
-Nottingham                Expires April 4, 2020                 [Page 2]
+Nottingham                Expires April 9, 2020                 [Page 2]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
 
-     4.14. Server Push . . . . . . . . . . . . . . . . . . . . . . .  24
-     4.15. Versioning and Evolution  . . . . . . . . . . . . . . . .  25
+     4.13. Maintaining Application Boundaries  . . . . . . . . . . .  24
+     4.14. Using Server Push . . . . . . . . . . . . . . . . . . . .  24
+     4.15. Allowing Versioning and Evolution . . . . . . . . . . . .  25
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  26
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .  26
      6.1.  Privacy Considerations  . . . . . . . . . . . . . . . . .  26
@@ -164,8 +165,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
 
 
-
-Nottingham                Expires April 4, 2020                 [Page 3]
+Nottingham                Expires April 9, 2020                 [Page 3]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -192,11 +192,11 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    o  How can interoperability problems and "protocol dead ends" be
       avoided?
 
-   This document contains best current practices regarding the use of
-   HTTP by applications other than Web browsing.  Section 2 defines what
-   applications it applies to; Section 3 surveys the properties of HTTP
-   that are important to preserve, and Section 4 conveys best practices
-   for those applications that do use HTTP.
+   This document contains best current practices regarding how to
+   specify use of HTTP by applications other than Web browsing.
+   Section 2 defines what applications it applies to; Section 3 surveys
+   the properties of HTTP that are important to preserve, and Section 4
+   conveys best practices for those applications that do use HTTP.
 
    It is written primarily to guide IETF efforts to define application
    protocols using HTTP for deployment on the Internet, but might be
@@ -214,46 +214,53 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 2.  Is HTTP Being Used?
 
    Different applications have different goals when using HTTP.  The
-   requirements in this document apply when any of the following
-   conditions are true:
+   requirements in this document apply when a specification defines an
+   application that:
 
-   o  the transport port in use is 80 or 443,
+   o  uses the transport port 80 or 443, or
 
 
 
-Nottingham                Expires April 4, 2020                 [Page 4]
+Nottingham                Expires April 9, 2020                 [Page 4]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
 
-   o  the URI scheme "http" or "https" is used,
+   o  uses the URI scheme "http" or "https", or
 
-   o  the ALPN protocol ID [RFC7301] generically identifies HTTP (e.g.,
-      "http/1.1", "h2", "h2c"), or
+   o  uses an ALPN protocol ID [RFC7301] that generically identifies
+      HTTP (e.g., "http/1.1", "h2", "h2c"), or
 
-   o  the IANA registries defined for HTTP are updated or modified.
+   o  updates or modifies the IANA registries defined for HTTP.
 
-   When an application is using HTTP, all of the requirements of the
-   HTTP protocol suite are in force (including but not limited to
-   [I-D.ietf-httpbis-semantics], [I-D.ietf-httpbis-cache],
-   [I-D.ietf-httpbis-messaging], and [RFC7540]).
+   Additionally, when a specification is using HTTP, all of the
+   requirements of the HTTP protocol suite are in force (including but
+   not limited to [I-D.ietf-httpbis-semantics],
+   [I-D.ietf-httpbis-cache], [I-D.ietf-httpbis-messaging], and
+   [RFC7540]).
 
-   An application might not use HTTP according to this definition and
-   still rely upon the HTTP specifications in some manner.  For example,
-   an application might wish to avoid re-specifying parts of the message
-   format, but change others; or, it might want to use a different set
-   of methods.
+   Note that this document is intended to apply to applications, not
+   generic extensions to HTTP, which follow the requirements in the
+   relevant specification.  Furthermore, it is intended for applications
+   defined by IETF specifications, although other standards
+   organisations are encouraged to adhere to its requirements.
 
-   Such applications are referred to as "protocols based upon HTTP" in
-   this document.  These have more freedom to modify protocol
-   operations, but are also likely to lose at least a portion of the
-   benefits outlined above, as most HTTP implementations won't be easily
-   adaptable to these changes, and as the protocol diverges from HTTP,
-   the benefit of mindshare will be lost.
+2.1.  Non-HTTP Protocols
 
-   Protocols that are based upon HTTP MUST NOT reuse HTTP's URI schemes,
-   transport ports, ALPN protocol IDs or IANA registries; rather, they
-   are encouraged to establish their own.
+   A specification might not use HTTP according to this definition and
+   still rely upon HTTP in some manner.  For example, an application
+   might wish to avoid re-specifying parts of the message format, but
+   change others; or, it might want to use a different set of methods.
+
+   Doing so brings more freedom to modify protocol operations, but loses
+   at least a portion of the benefits outlined above, as most HTTP
+   implementations won't be easily adaptable to these changes, and as
+   the protocol diverges from HTTP, the benefit of mindshare will be
+   lost.
+
+   Such protocols MUST NOT reuse HTTP's URI schemes, transport ports,
+   ALPN protocol IDs or IANA registries; rather, they are encouraged to
+   establish their own.
 
 3.  What's Important About HTTP
 
@@ -266,33 +273,21 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    This section examines the facets of the protocol that are important
    to preserve in these situations.
 
-3.1.  Generic Semantics
-
-   When writing a specification, it's often tempting to specify exactly
-   how HTTP is to be implemented, supported and used.
-
-   However, this can easily lead to an unintended profile of HTTP's
-   behaviour.  For example, it's common to see specifications with
-   language like this:
 
 
 
-Nottingham                Expires April 4, 2020                 [Page 5]
+
+Nottingham                Expires April 9, 2020                 [Page 5]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
 
-   A `POST` request MUST result in a `201 Created` response.
-
-   This forms an expectation in the client that the response will always
-   be "201 Created", when in fact there are a number of reasons why the
-   status code might differ in a real deployment.  If the client does
-   not anticipate this, the application's deployment is brittle.
+3.1.  Generic Semantics
 
    Much of the value of HTTP is in its generic semantics - that is, the
    protocol elements defined by HTTP are potentially applicable to every
    resource, not specific to a particular context.  Application-specific
-   semantics are best expressed in the payload; oten in the body, but
+   semantics are best expressed in the payload; often in the body, but
    also in header fields.
 
    This generic/application-specific split allows a HTTP message to be
@@ -308,7 +303,23 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    their specifications on protocol elements that are specific to that
    application; namely their HTTP resources.
 
-   See Section 4.2 for details.
+   For example, when writing a specification, it's often tempting to
+   specify exactly how HTTP is to be implemented, supported and used.
+
+   However, this can easily lead to an unintended profile of HTTP's
+   behaviour.  For example, it's common to see specifications with
+   language like this:
+
+   A `POST` request MUST result in a `201 Created` response.
+
+   This forms an expectation in the client that the response will always
+   be "201 Created", when in fact there are a number of reasons why the
+   status code might differ in a real deployment; for example, there
+   might be a proxy that requires authentication, or a server-side
+   error, or a redirection.  If the client does not anticipate this, the
+   application's deployment is brittle.
+
+   See Section 4.2 for more details.
 
 3.2.  Links
 
@@ -317,6 +328,15 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    application.  This effectively overlays special, application-specific
    semantics onto that space, precludes other applications from using
    it.
+
+
+
+
+
+Nottingham                Expires April 9, 2020                 [Page 6]
+
+Internet-Draft        Building Protocols with HTTP          October 2019
+
 
    As explained in [RFC7320], such "squatting" on a part of the URL
    space by a standard usurps the server's authority over its own
@@ -329,15 +349,6 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
    Using runtime links in this fashion has a number of other benefits -
    especially when an application is to have multiple implementations
-
-
-
-
-Nottingham                Expires April 4, 2020                 [Page 6]
-
-Internet-Draft        Building Protocols with HTTP          October 2019
-
-
    and/or deployments (as is often the case for those that are
    standardised).
 
@@ -374,6 +385,15 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    o  Caching for server scalability, latency and bandwidth reduction,
       and reliability
 
+
+
+
+
+Nottingham                Expires April 9, 2020                 [Page 7]
+
+Internet-Draft        Building Protocols with HTTP          October 2019
+
+
    o  Granularity of access control (through use of a rich space of
       URLs)
 
@@ -386,14 +406,6 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    features that the protocol offers, so that their users receive the
    maximum benefit from it, and to allow it to be deployed in a variety
    of situations.  This document does not require specific features to
-
-
-
-Nottingham                Expires April 4, 2020                 [Page 7]
-
-Internet-Draft        Building Protocols with HTTP          October 2019
-
-
    be used, since the appropriate design tradeoffs are highly specific
    to a given situation.  However, following the practices in Section 4
    is a good starting point.
@@ -428,6 +440,16 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    Applications using HTTP MUST NOT specify a maximum version, to
    preserve the protocol's ability to evolve.
 
+
+
+
+
+
+Nottingham                Expires April 9, 2020                 [Page 8]
+
+Internet-Draft        Building Protocols with HTTP          October 2019
+
+
    When specifying examples of protocol interactions, applications
    should document both the request and response messages, with full
    headers, preferably in HTTP/1.1 format.  For example:
@@ -438,18 +460,6 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    User-Agent: Foo/1.0
 
 
-
-
-
-
-
-
-
-Nottingham                Expires April 4, 2020                 [Page 8]
-
-Internet-Draft        Building Protocols with HTTP          October 2019
-
-
    HTTP/1.1 200 OK
    Content-Type: application/things+json
    Content-Length: 500
@@ -457,17 +467,17 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
    [payload here]
 
-4.2.  Defining HTTP Resources
+4.2.  Specifying Server Behaviour
 
-   Applications that use HTTP should focus on defining the following
-   application-specific protocol elements:
+   The most effective way to specify an application's server-side HTTP
+   behaviours is in terms of the following protocol elements:
 
-   o  media types [RFC6838], often based upon a format convention such
+   o  Media types [RFC6838], often based upon a format convention such
       as JSON [RFC8259],
 
    o  HTTP header fields, as per Section 4.7, and
 
-   o  the behaviour of resources, as identified by link relations
+   o  The behaviour of resources, as identified by link relations
       [RFC8288].
 
    By composing these protocol elements, an application can define a set
@@ -491,17 +501,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
 
 
-
-
-
-
-
-
-
-
-
-
-Nottingham                Expires April 4, 2020                 [Page 9]
+Nottingham                Expires April 9, 2020                 [Page 9]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -522,14 +522,20 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    Applications can also specify the use of URI Templates [RFC6570] to
    allow clients to generate URLs based upon runtime data.
 
-4.3.  Specifying Client Behaviours
+4.3.  Specifying Client Behaviour
 
-   Some behaviours (e.g., automatic redirect handling) and extensions
-   (e.g., Cookies) are not required by HTTP, but nevertheless have
-   become very common, possibly because they are supported by Web
-   browsers.  If their use is not explicitly specified by applications
-   using HTTP, there may be confusion and interoperability problems.
-   This section recommends default handling for these mechanisms.
+   In general, applications using HTTP ought to align their expectations
+   for client behaviour as closely as possible with that of Web
+   browsers, to avoid interoperability issues when they are used.
+
+   One way to do this is to define it in terms of [FETCH], since that is
+   the abstraction that browsers use for HTTP.
+
+   Some client behaviours (e.g., automatic redirect handling) and
+   extensions (e.g., Cookies) are not required by HTTP, but nevertheless
+   have become very common.  If their use is not explicitly specified by
+   applications using HTTP, there may be confusion and interoperability
+   problems.  In particular:
 
    o  Redirect handling - Applications need to specify how redirects are
       expected to be handled; see Section 4.6.1.
@@ -542,33 +548,24 @@ Internet-Draft        Building Protocols with HTTP          October 2019
       certificates are to be checked according to [RFC2818] when HTTPS
       is used.
 
-   In general, applications using HTTP ought to align their usage as
-   closely as possible with Web browsers, to avoid interoperability
-   issues when they are used.  See Section 4.12.
-
-   If an application using HTTP has browser compatibility as a goal,
-   client interaction ought to be defined in terms of [FETCH], since
-   that is the abstraction that browsers use for HTTP; it enforces many
-   of these best practices.
-
    Applications using HTTP MUST NOT require HTTP features that are
    usually negotiated to be supported by clients.  For example,
    requiring that clients support responses with a certain content-
+   coding ([I-D.ietf-httpbis-semantics], Section 6.2.2) instead of
+   negotiating for it ([I-D.ietf-httpbis-semantics], Section 8.4.4)
+   means that otherwise conformant clients cannot interoperate with the
 
 
 
-Nottingham                Expires April 4, 2020                [Page 10]
+Nottingham                Expires April 9, 2020                [Page 10]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
 
-   coding ([I-D.ietf-httpbis-semantics], Section 6.2.2) instead of
-   negotiating for it ([I-D.ietf-httpbis-semantics], Section 8.4.4)
-   means that otherwise conformant clients cannot interoperate with the
    application.  Applications can encourage the implementation of such
    features, though.
 
-4.4.  HTTP URLs
+4.4.  Specifying URLs
 
    In HTTP, URLs are opaque identifiers under the control of the server.
    As outlined in [RFC7320], standards cannot usurp this space, since it
@@ -607,17 +604,6 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    convey a whole URL, but only a hostname) applications can request a
    well-known URI [I-D.nottingham-rfc5785bis] as an entry point.
 
-
-
-
-
-
-
-Nottingham                Expires April 4, 2020                [Page 11]
-
-Internet-Draft        Building Protocols with HTTP          October 2019
-
-
 4.4.2.  URI Schemes
 
    Applications that use HTTP will typically employ the "http" and/or
@@ -625,13 +611,20 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    authentication, integrity and confidentiality, as well as mitigate
    pervasive monitoring attacks [RFC7258].
 
+
+
+Nottingham                Expires April 9, 2020                [Page 11]
+
+Internet-Draft        Building Protocols with HTTP          October 2019
+
+
    However, application-specific schemes can also be defined.  When
    defining an URI scheme for an application using HTTP, there are a
    number of tradeoffs and caveats to keep in mind:
 
    o  Unmodified Web browsers will not support the new scheme.  While it
       is possible to register new URI schemes with Web browsers (e.g.
-      registerProtocolHandler() in [HTML5], as well as several
+      registerProtocolHandler() in [HTML], as well as several
       proprietary approaches), support for these mechanisms is not
       shared by all browsers, and their capabilities vary.
 
@@ -666,14 +659,6 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    o  Web features that require a secure context [SECCTXT] will likely
       treat a new scheme as insecure.
 
-
-
-
-Nottingham                Expires April 4, 2020                [Page 12]
-
-Internet-Draft        Building Protocols with HTTP          October 2019
-
-
    See [RFC7595] for more information about minting new URI schemes.
 
 4.4.3.  Transport Ports
@@ -681,6 +666,14 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    Applications can use the applicable default port (80 for HTTP, 443
    for HTTPS), or they can be deployed upon other ports.  This decision
    can be made at deployment time, or might be encouraged by the
+
+
+
+Nottingham                Expires April 9, 2020                [Page 12]
+
+Internet-Draft        Building Protocols with HTTP          October 2019
+
+
    application's specification (e.g., by registering a port for that
    application).
 
@@ -696,7 +689,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
    See [RFC7605] for further guidance.
 
-4.5.  HTTP Methods
+4.5.  Using HTTP Methods
 
    Applications that use HTTP MUST confine themselves to using
    registered HTTP methods such as GET, POST, PUT, DELETE, and PATCH.
@@ -721,15 +714,6 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    semantics allow caching, side-effect free linking and underlies many
    of the benefits of using HTTP.
 
-
-
-
-
-Nottingham                Expires April 4, 2020                [Page 13]
-
-Internet-Draft        Building Protocols with HTTP          October 2019
-
-
    A common use of GET is to perform queries, often using the query
    component of the URL; this is a familiar pattern from Web browsing,
    and the results can be cached, improving efficiency of an often
@@ -737,6 +721,15 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
    In some cases, however, GET might be unwieldy for expressing queries,
    because of the limited syntax of the URI; in particular, if binary
+
+
+
+
+Nottingham                Expires April 9, 2020                [Page 13]
+
+Internet-Draft        Building Protocols with HTTP          October 2019
+
+
    data forms part of the query terms, it needs to be encoded to conform
    to URI syntax.
 
@@ -779,18 +772,19 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    o  It isn't possible to link to the metadata with a simple URL,
       because OPTIONS is not the default GET method.
 
-
-
-Nottingham                Expires April 4, 2020                [Page 14]
-
-Internet-Draft        Building Protocols with HTTP          October 2019
-
-
    o  OPTIONS responses are not cacheable, because HTTP caches operate
       on representations of the resource (i.e., GET and HEAD).  If
       OPTIONS responses are cached separately, their interaction with
       HTTP cache expiry, secondary keys and other mechanisms needs to be
       considered.
+
+
+
+
+Nottingham                Expires April 9, 2020                [Page 14]
+
+Internet-Draft        Building Protocols with HTTP          October 2019
+
 
    o  OPTIONS is "chatty" - always separating metadata out into a
       separate request increases the number of requests needed to
@@ -814,7 +808,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
       client wants to discover a resource's capabilities before they
       interact with it.
 
-4.6.  HTTP Status Codes
+4.6.  Using HTTP Status Codes
 
    HTTP status codes convey semantics both for the benefit of generic
    HTTP components - such as caches, intermediaries, and clients - and
@@ -834,20 +828,20 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    codes one-to-one often leads to a situation where the finite space of
    applicable HTTP status codes is exhausted.  This, in turn, leads to a
    number of bad practices - including minting new, application-specific
-
-
-
-Nottingham                Expires April 4, 2020                [Page 15]
-
-Internet-Draft        Building Protocols with HTTP          October 2019
-
-
    status codes, or using existing status codes even though the link
    between their semantics and the application's is tenuous at best.
 
    Instead, applications using HTTP should define their errors to use
    the most applicable status code, making generous use of the general
    status codes (200, 400 and 500) when in doubt.  Importantly, they
+
+
+
+Nottingham                Expires April 9, 2020                [Page 15]
+
+Internet-Draft        Building Protocols with HTTP          October 2019
+
+
    should not specify a one-to-one relationship between status codes and
    application errors, thereby avoiding the exhaustion issue outlined
    above.
@@ -886,18 +880,6 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    their proposal as a separate HTTP extension, rather than as part of
    an application's specification.
 
-
-
-
-
-
-
-
-Nottingham                Expires April 4, 2020                [Page 16]
-
-Internet-Draft        Building Protocols with HTTP          October 2019
-
-
 4.6.1.  Redirection
 
    The 3xx series of status codes specified in Section 9.4
@@ -907,6 +889,14 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    to indicate where the client should send the request to.
 
    There are two ways that this group of status codes differ:
+
+
+
+
+Nottingham                Expires April 9, 2020                [Page 16]
+
+Internet-Draft        Building Protocols with HTTP          October 2019
+
 
    o  Whether they are permanent or temporary.  Permanent redirects can
       be used to update links stored in the client (e.g., bookmarks),
@@ -946,21 +936,25 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    various mechanisms; e.g., sent Authorization
    ([I-D.ietf-httpbis-semantics]) and Cookie
    ([I-D.ietf-httpbis-rfc6265bis]) headers will change if the origin
-
-
-
-Nottingham                Expires April 4, 2020                [Page 17]
-
-Internet-Draft        Building Protocols with HTTP          October 2019
-
-
    (and sometimes path) of the request changes.  An application using
    HTTP should specify if any request headers that it defines need to be
    modified or removed upon a redirect; however, this behaviour cannot
    be relied upon, since a generic client (like a browser) will be
    unaware of such requirements.
 
-4.7.  HTTP Header Fields
+
+
+
+
+
+
+
+Nottingham                Expires April 9, 2020                [Page 17]
+
+Internet-Draft        Building Protocols with HTTP          October 2019
+
+
+4.7.  Specifying HTTP Header Fields
 
    Applications often define new HTTP header fields.  Typically, using
    HTTP header fields is appropriate in a few different situations:
@@ -1002,17 +996,19 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
    The semantics of existing HTTP header fields MUST NOT be re-defined
    without updating their registration or defining an extension to them
-
-
-
-Nottingham                Expires April 4, 2020                [Page 18]
-
-Internet-Draft        Building Protocols with HTTP          October 2019
-
-
    (if allowed).  For example, an application using HTTP cannot specify
    that the "Location" header has a special meaning in a certain
    context.
+
+
+
+
+
+
+Nottingham                Expires April 9, 2020                [Page 18]
+
+Internet-Draft        Building Protocols with HTTP          October 2019
+
 
    See Section 4.9 for the interaction between headers and HTTP caching;
    in particular, request headers that are used to "select" a response
@@ -1031,7 +1027,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    they define; this makes it possible to identify them unambiguously
    and negotiate for their use.  See [RFC6838] for more information.
 
-4.9.  HTTP Caching
+4.9.  Accommodating HTTP Caching
 
    HTTP caching [I-D.ietf-httpbis-cache] is one of the primary benefits
    of using HTTP for applications; it provides scalability, reduces
@@ -1058,16 +1054,17 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    response directive (Section 5.2.2.8 of [I-D.ietf-httpbis-cache]).
    The Expires header (Section 5.3 of [I-D.ietf-httpbis-cache]) can also
    be used, but it is not necessary; all modern cache implementations
+   support Cache-Control, and specifying freshness as a delta is usually
+   more convenient and less error-prone.
 
 
 
-Nottingham                Expires April 4, 2020                [Page 19]
+
+
+Nottingham                Expires April 9, 2020                [Page 19]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
-
-   support Cache-Control, and specifying freshness as a delta is usually
-   more convenient and less error-prone.
 
    In some situations, responses without explicit cache freshness
    directives will be stored and served using a heuristic freshness
@@ -1115,15 +1112,16 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    need to be carefully considered, since the response will be used as
    long as it is considered fresh.
 
+   In particular, application authors need to consider how responses
+   that are not freshly obtained from the origin server should be
 
 
-Nottingham                Expires April 4, 2020                [Page 20]
+
+Nottingham                Expires April 9, 2020                [Page 20]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
 
-   In particular, application authors need to consider how responses
-   that are not freshly obtained from the origin server should be
    handled; if they have a concept like a validity period, this will
    need to be calculated considering the age of the response (see
    Section 4.2.3 of [I-D.ietf-httpbis-cache]).
@@ -1156,7 +1154,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    be revalidated with If-None-Match, and varies on the Accept-Encoding
    request header field.
 
-4.10.  Application State
+4.10.  Handling Application State
 
    Applications can use stateful cookies [I-D.ietf-httpbis-rfc6265bis]
    to identify a client and/or store client-specific data to
@@ -1170,15 +1168,16 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
    Applications MUST NOT make assumptions about the relationship between
    separate requests on a single transport connection; doing so breaks
+   many of the assumptions of HTTP as a stateless protocol, and will
 
 
 
-Nottingham                Expires April 4, 2020                [Page 21]
+
+Nottingham                Expires April 9, 2020                [Page 21]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
 
-   many of the assumptions of HTTP as a stateless protocol, and will
    cause problems in interoperability, security, operability and
    evolution.
 
@@ -1229,7 +1228,8 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
 
 
-Nottingham                Expires April 4, 2020                [Page 22]
+
+Nottingham                Expires April 9, 2020                [Page 22]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -1245,8 +1245,8 @@ Internet-Draft        Building Protocols with HTTP          October 2019
       interpreted as active content by a Web browser.
 
    o  Using Content-Security-Policy [CSP] to constrain the capabilities
-      of active content (such as HTML [HTML5]), thereby mitigating
-      Cross-Site Scripting attacks.
+      of active content (such as HTML [HTML]), thereby mitigating Cross-
+      Site Scripting attacks.
 
    o  Using Referrer-Policy [REFERRER-POLICY] to prevent sensitive data
       in URLs from being leaked in the Referer request header.
@@ -1285,7 +1285,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
 
 
-Nottingham                Expires April 4, 2020                [Page 23]
+Nottingham                Expires April 9, 2020                [Page 23]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -1293,7 +1293,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    the abstraction that browsers use for HTTP; it enforces many of these
    best practices.
 
-4.13.  Application Boundaries
+4.13.  Maintaining Application Boundaries
 
    Because the origin [RFC6454] is how many HTTP capabilities are
    scoped, applications also need to consider how deployments might
@@ -1327,7 +1327,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    origin data to browsers will need to implement the CORS protocol; see
    [FETCH].
 
-4.14.  Server Push
+4.14.  Using Server Push
 
    HTTP/2 adds the ability for servers to "push" request/response pairs
    to clients in [RFC7540], Section 8.2.  While server push seems like a
@@ -1341,7 +1341,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
 
 
-Nottingham                Expires April 4, 2020                [Page 24]
+Nottingham                Expires April 9, 2020                [Page 24]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -1373,7 +1373,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    requirements regarding authority in [RFC7540], Section 8.2, to avoid
    cross-origin push attacks.
 
-4.15.  Versioning and Evolution
+4.15.  Allowing Versioning and Evolution
 
    It's often necessary to introduce new features into application
    protocols, and change existing ones.
@@ -1397,7 +1397,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
 
 
-Nottingham                Expires April 4, 2020                [Page 25]
+Nottingham                Expires April 9, 2020                [Page 25]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -1453,7 +1453,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
 
 
-Nottingham                Expires April 4, 2020                [Page 26]
+Nottingham                Expires April 9, 2020                [Page 26]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -1509,7 +1509,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
 
 
-Nottingham                Expires April 4, 2020                [Page 27]
+Nottingham                Expires April 9, 2020                [Page 27]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -1560,12 +1560,12 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    [FETCH]    WHATWG, "Fetch - Living Standard", n.d.,
               <https://fetch.spec.whatwg.org>.
 
-   [HTML5]    WHATWG, "HTML - Living Standard", n.d.,
+   [HTML]     WHATWG, "HTML - Living Standard", n.d.,
               <https://html.spec.whatwg.org>.
 
 
 
-Nottingham                Expires April 4, 2020                [Page 28]
+Nottingham                Expires April 9, 2020                [Page 28]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -1621,7 +1621,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
 
 
-Nottingham                Expires April 4, 2020                [Page 29]
+Nottingham                Expires April 9, 2020                [Page 29]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -1677,7 +1677,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
 
 
-Nottingham                Expires April 4, 2020                [Page 30]
+Nottingham                Expires April 9, 2020                [Page 30]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
@@ -1733,4 +1733,4 @@ Author's Address
 
 
 
-Nottingham                Expires April 4, 2020                [Page 31]
+Nottingham                Expires April 9, 2020                [Page 31]
