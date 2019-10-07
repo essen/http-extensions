@@ -80,7 +80,7 @@ Table of Contents
    2.  Is HTTP Being Used? . . . . . . . . . . . . . . . . . . . . .   4
      2.1.  Non-HTTP Protocols  . . . . . . . . . . . . . . . . . . .   5
    3.  What's Important About HTTP . . . . . . . . . . . . . . . . .   5
-     3.1.  Generic Semantics . . . . . . . . . . . . . . . . . . . .   6
+     3.1.  Generic Semantics . . . . . . . . . . . . . . . . . . . .   5
      3.2.  Links . . . . . . . . . . . . . . . . . . . . . . . . . .   6
      3.3.  Rich Functionality  . . . . . . . . . . . . . . . . . . .   7
    4.  Best Practices for Using HTTP . . . . . . . . . . . . . . . .   8
@@ -98,7 +98,7 @@ Table of Contents
        4.6.1.  Redirection . . . . . . . . . . . . . . . . . . . . .  17
      4.7.  Specifying HTTP Header Fields . . . . . . . . . . . . . .  18
      4.8.  Defining Message Payloads . . . . . . . . . . . . . . . .  19
-     4.9.  Accommodating HTTP Caching  . . . . . . . . . . . . . . .  19
+     4.9.  Leveraging HTTP Caching . . . . . . . . . . . . . . . . .  19
        4.9.1.  Freshness . . . . . . . . . . . . . . . . . . . . . .  20
        4.9.2.  Stale Responses . . . . . . . . . . . . . . . . . . .  20
        4.9.3.  Caching and Application Semantics . . . . . . . . . .  21
@@ -152,15 +152,15 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
    These protocols are often ad hoc; they are intended for only
    deployment by one or a few servers, and consumption by a limited set
-   of clients.  Perhaps because of the factors cited above, a body of
-   practices and tools has arisen around defining HTTP-based APIs that
-   favours these conditions.
+   of clients.  As a result, a body of practices and tools has arisen
+   around defining HTTP-based APIs that favours these conditions.
 
    However, when such an application has multiple, separate
-   implementations of the server component, is deployed on multiple
-   uncoordinated servers, and is consumed by diverse clients - as is
-   often the case for standards efforts to define new HTTP APIs - tools
-   and practices intended for limited deployment can become unsuitable.
+   implementations, is deployed on multiple uncoordinated servers, and
+   is consumed by diverse clients - as is often the case for HTTP APIs
+   defined by standards efforts - tools and practices intended for
+   limited deployment can become unsuitable.
+
 
 
 
@@ -192,11 +192,10 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    o  How can interoperability problems and "protocol dead ends" be
       avoided?
 
-   This document contains best current practices regarding how to
-   specify use of HTTP by applications other than Web browsing.
-   Section 2 defines what applications it applies to; Section 3 surveys
-   the properties of HTTP that are important to preserve, and Section 4
-   conveys best practices for those applications that do use HTTP.
+   This document contains best current practices for the specification
+   of such applications.  Section 2 defines when it applies; Section 3
+   surveys the properties of HTTP that are important to preserve, and
+   Section 4 conveys best practices for the specifying them.
 
    It is written primarily to guide IETF efforts to define application
    protocols using HTTP for deployment on the Internet, but might be
@@ -218,6 +217,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    application that:
 
    o  uses the transport port 80 or 443, or
+
 
 
 
@@ -247,10 +247,11 @@ Internet-Draft        Building Protocols with HTTP          October 2019
 
 2.1.  Non-HTTP Protocols
 
-   A specification might not use HTTP according to this definition and
-   still rely upon HTTP in some manner.  For example, an application
-   might wish to avoid re-specifying parts of the message format, but
-   change others; or, it might want to use a different set of methods.
+   A specification might not use HTTP according to the criteria above
+   and still define an application that relies upon HTTP in some manner.
+   For example, an application might wish to avoid re-specifying parts
+   of the message format, but change others; or, it might want to use a
+   different set of methods.
 
    Doing so brings more freedom to modify protocol operations, but loses
    at least a portion of the benefits outlined above, as most HTTP
@@ -258,21 +259,20 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    the protocol diverges from HTTP, the benefit of mindshare will be
    lost.
 
-   Such protocols MUST NOT reuse HTTP's URI schemes, transport ports,
-   ALPN protocol IDs or IANA registries; rather, they are encouraged to
-   establish their own.
+   Such specifications MUST NOT reuse HTTP's URI schemes, transport
+   ports, ALPN protocol IDs or IANA registries; rather, they are
+   encouraged to establish their own.
 
 3.  What's Important About HTTP
 
-   Applications using HTTP are defined and deployed in many ways;
-   sometimes they are brought to the IETF for standardisation.  What
-   might be workable for deployment in a limited fashion isn't
-   appropriate for standardisation and the corresponding broader
-   deployment.
-
    This section examines the facets of the protocol that are important
-   to preserve in these situations.
+   to consider when using HTTP to define an application protocol.
 
+3.1.  Generic Semantics
+
+   Much of the value of HTTP is in its generic semantics - that is, the
+   protocol elements defined by HTTP are potentially applicable to every
+   resource, not specific to a particular context.  Application-specific
 
 
 
@@ -282,11 +282,6 @@ Nottingham                Expires April 9, 2020                 [Page 5]
 Internet-Draft        Building Protocols with HTTP          October 2019
 
 
-3.1.  Generic Semantics
-
-   Much of the value of HTTP is in its generic semantics - that is, the
-   protocol elements defined by HTTP are potentially applicable to every
-   resource, not specific to a particular context.  Application-specific
    semantics are best expressed in the payload; often in the body, but
    also in header fields.
 
@@ -329,6 +324,11 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    semantics onto that space, precludes other applications from using
    it.
 
+   As explained in [RFC7320], such "squatting" on a part of the URL
+   space by a standard usurps the server's authority over its own
+   resources, can cause deployment issues, and is therefore bad practice
+   in standards.
+
 
 
 
@@ -337,11 +337,6 @@ Nottingham                Expires April 9, 2020                 [Page 6]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
-
-   As explained in [RFC7320], such "squatting" on a part of the URL
-   space by a standard usurps the server's authority over its own
-   resources, can cause deployment issues, and is therefore bad practice
-   in standards.
 
    Instead of statically defining URI components like paths, it is
    RECOMMENDED that applications using HTTP define links in payloads, to
@@ -385,6 +380,11 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    o  Caching for server scalability, latency and bandwidth reduction,
       and reliability
 
+   o  Granularity of access control (through use of a rich space of
+      URLs)
+
+   o  Partial content to selectively request part of a response
+
 
 
 
@@ -393,11 +393,6 @@ Nottingham                Expires April 9, 2020                 [Page 7]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
-
-   o  Granularity of access control (through use of a rich space of
-      URLs)
-
-   o  Partial content to selectively request part of a response
 
    o  The ability to interact with the application easily using a Web
       browser
@@ -440,6 +435,11 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    Applications using HTTP MUST NOT specify a maximum version, to
    preserve the protocol's ability to evolve.
 
+   When specifying examples of protocol interactions, applications
+   should document both the request and response messages, with full
+   headers, preferably in HTTP/1.1 format.  For example:
+
+
 
 
 
@@ -449,10 +449,6 @@ Nottingham                Expires April 9, 2020                 [Page 8]
 
 Internet-Draft        Building Protocols with HTTP          October 2019
 
-
-   When specifying examples of protocol interactions, applications
-   should document both the request and response messages, with full
-   headers, preferably in HTTP/1.1 format.  For example:
 
    GET /thing HTTP/1.1
    Host: example.com
@@ -496,6 +492,10 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    o  Resource deletion using DELETE.
 
    For example, an application might specify:
+
+
+
+
 
 
 
@@ -1049,7 +1049,7 @@ Internet-Draft        Building Protocols with HTTP          October 2019
    they define; this makes it possible to identify them unambiguously
    and negotiate for their use.  See [RFC6838] for more information.
 
-4.9.  Accommodating HTTP Caching
+4.9.  Leveraging HTTP Caching
 
    HTTP caching [I-D.ietf-httpbis-cache] is one of the primary benefits
    of using HTTP for applications; it provides scalability, reduces
