@@ -16,7 +16,8 @@ Abstract
 
    HTTP is often used as a substrate for other application protocols
    (a.k.a.  HTTP-based APIs).  This document specifies best practices
-   for such protocols' use of HTTP when they are defined for diverse
+   for writing specifications that use HTTP to define new application
+   protocols, especially when they are defined for diverse
    implementation and broad deployment (e.g., in standards efforts).
 
 Note to Readers
@@ -45,7 +46,6 @@ Status of This Memo
    material or to cite them other than as "work in progress."
 
    This Internet-Draft will expire on April 9, 2020.
-
 
 
 
