@@ -91,7 +91,7 @@ Table of Contents
      3.2.  Dictionaries  . . . . . . . . . . . . . . . . . . . . . .   8
      3.3.  Items . . . . . . . . . . . . . . . . . . . . . . . . . .   9
      3.4.  Integers  . . . . . . . . . . . . . . . . . . . . . . . .   9
-     3.5.  Floats  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     3.5.  Floats  . . . . . . . . . . . . . . . . . . . . . . . . .  10
      3.6.  Strings . . . . . . . . . . . . . . . . . . . . . . . . .  10
      3.7.  Tokens  . . . . . . . . . . . . . . . . . . . . . . . . .  11
      3.8.  Byte Sequences  . . . . . . . . . . . . . . . . . . . . .  11
@@ -104,7 +104,7 @@ Table of Contents
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  28
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .  28
      7.2.  Informative References  . . . . . . . . . . . . . . . . .  29
-     7.3.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .  29
+     7.3.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .  30
    Appendix A.  Acknowledgements . . . . . . . . . . . . . . . . . .  30
 
 
@@ -117,23 +117,23 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    Appendix B.  Frequently Asked Questions . . . . . . . . . . . . .  30
      B.1.  Why not JSON? . . . . . . . . . . . . . . . . . . . . . .  30
      B.2.  Structured Headers don't "fit" my data. . . . . . . . . .  31
-   Appendix C.  Implementation Notes . . . . . . . . . . . . . . . .  31
+   Appendix C.  Implementation Notes . . . . . . . . . . . . . . . .  32
    Appendix D.  Changes  . . . . . . . . . . . . . . . . . . . . . .  32
      D.1.  Since draft-ietf-httpbis-header-structure-13  . . . . . .  32
      D.2.  Since draft-ietf-httpbis-header-structure-12  . . . . . .  32
-     D.3.  Since draft-ietf-httpbis-header-structure-11  . . . . . .  32
-     D.4.  Since draft-ietf-httpbis-header-structure-10  . . . . . .  32
+     D.3.  Since draft-ietf-httpbis-header-structure-11  . . . . . .  33
+     D.4.  Since draft-ietf-httpbis-header-structure-10  . . . . . .  33
      D.5.  Since draft-ietf-httpbis-header-structure-09  . . . . . .  33
      D.6.  Since draft-ietf-httpbis-header-structure-08  . . . . . .  33
-     D.7.  Since draft-ietf-httpbis-header-structure-07  . . . . . .  33
+     D.7.  Since draft-ietf-httpbis-header-structure-07  . . . . . .  34
      D.8.  Since draft-ietf-httpbis-header-structure-06  . . . . . .  34
      D.9.  Since draft-ietf-httpbis-header-structure-05  . . . . . .  34
-     D.10. Since draft-ietf-httpbis-header-structure-04  . . . . . .  34
-     D.11. Since draft-ietf-httpbis-header-structure-03  . . . . . .  34
-     D.12. Since draft-ietf-httpbis-header-structure-02  . . . . . .  34
+     D.10. Since draft-ietf-httpbis-header-structure-04  . . . . . .  35
+     D.11. Since draft-ietf-httpbis-header-structure-03  . . . . . .  35
+     D.12. Since draft-ietf-httpbis-header-structure-02  . . . . . .  35
      D.13. Since draft-ietf-httpbis-header-structure-01  . . . . . .  35
      D.14. Since draft-ietf-httpbis-header-structure-00  . . . . . .  35
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  35
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  36
 
 1.  Introduction
 
@@ -341,7 +341,8 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 3.1.  Lists
 
    Lists are arrays of zero or more members, each of which can be an
-   item (Section 3.3) or an inner list (an array of zero or more items).
+   item (Section 3.3) or an inner list (Section 3.1.1), both of which
+   can be parameterised (Section 3.1.2).
 
    The ABNF for lists is:
 
@@ -360,32 +361,31 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    Example-StrListHeader: "foo", "bar", "It was the best of times."
 
-   When a list-member is an inner-list, it can also have associated
-   parameters - an ordered map of key-value pairs where the keys are
-   short, textual strings and the values are bare items (Section 3.3).
-   There can be zero or more parameters on an inner-list, and their keys
-   are required to be unique within that scope.
+   In HTTP headers, an empty list is denoted by not serialising the
+   header at all.
+
+   Parsers MUST support lists containing at least 1024 members.  Header
+   specifications can constrain the types and cardinality of individual
+   list values as they require.
+
+3.1.1.  Inner Lists
+
+   An inner list is an array of zero or more items (Section 3.3).  Both
+   the individual items and the inner-list itself can be parameterised
+   (Section 3.1.2).
 
    In HTTP headers, inner lists are denoted by surrounding parenthesis,
    and have their values delimited by a single space.  A header field
-   whose value is defined as a list of lists of strings could look like:
+   whose value is defined as a list of inner-lists of strings could look
+   like:
 
    Example-StrListListHeader: ("foo" "bar"), ("baz"), ("bat" "one"), ()
 
    Note that the last member in this example is an empty inner list.
 
-   In HTTP headers, an inner-list's parameters are separated from the
-   inner-list and each other by semicolons.  For example:
-
-   Example-ParamListHeader: abc;a=1;b=2; cde_456, (ghi jkl);q="9";r=w
-
-   In HTTP headers, an empty list is denoted by not serialising the
-   header at all.
-
-   Parsers MUST support lists containing at least 1024 members, support
-   members with at least 256 parameters, support inner-lists containing
-   at least 256 members, and support parameter keys with at least 64
-   characters.
+   Parsers MUST support inner-lists containing at least 256 members.
+   Header specifications can constrain the types and cardinality of
+   individual inner-list members as they require.
 
 
 
@@ -394,17 +394,32 @@ Nottingham & Kamp        Expires April 10, 2020                 [Page 7]
 Internet-Draft         Structured Headers for HTTP          October 2019
 
 
-   Header specifications can constrain the types of individual list
-   values (including that of individual inner-list members and
-   parameters) if necessary.
+3.1.2.  Parameters
+
+   Parameters are an ordered map of key-values pairs that are associated
+   with an item (Section 3.3) or inner-list (Section 3.1.1).  The keys
+   are required to be unique within the scope of a map of parameters,
+   and the values are bare items (i.e., they themselves cannot be
+   parameterised; see Section 3.3).
+
+   In HTTP headers, an inner-list's parameters are separated from the
+   inner-list and each other by semicolons.  For example:
+
+   Example-ParamListHeader: abc;a=1;b=2; cde_456, (ghi;jk=4 l);q="9";r=w
+
+   Parsers MUST support lists containing at least 1024 members, support
+   members with at least 256 parameters, support inner-lists containing
+   at least 256 members, and support parameter keys with at least 64
+   characters.  Header specifications can constrain the types and
+   cardinality of individual parameter names and values as they require.
 
 3.2.  Dictionaries
 
    Dictionaries are ordered maps of name-value pairs, where the names
    are short, textual strings and the values are items (Section 3.3) or
-   arrays of items, both of which can be parameterised.  There can be
-   zero or more members, and their names are required to be unique
-   within the scope of the dictionary they occur within.
+   arrays of items, both of which can be parameterised (Section 3.1.2).
+   There can be zero or more members, and their names are required to be
+   unique within the scope of the dictionary they occur within.
 
    Implementations MUST provide access to dictionaries both by index and
    by name.  Specifications MAY use either means of accessing the
@@ -427,6 +442,14 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    Example-DictListHeader: rating=1.5, feelings=(joy sadness)
 
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                 [Page 8]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
    A dictionary with a mix of singular and list values, some with
    parameters:
 
@@ -441,15 +464,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    undefined or unknown, unless the header field's specification
    specifically disallows them.
 
-
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                 [Page 8]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
-
    Parsers MUST support dictionaries containing at least 1024 name/value
    pairs, and names with at least 64 characters.
 
@@ -457,13 +471,8 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    An item is can be a integer (Section 3.4), float (Section 3.5),
    string (Section 3.6), token (Section 3.7), byte sequence
-   (Section 3.8), or Boolean (Section 3.9).
-
-   An item can also have associated parameters - an ordered map of key-
-   value pairs where the keys are short, textual strings and the values
-   are bare items (i.e., parameter values cannot themselves have
-   parameters).  There can be zero or more parameters on a member, and
-   their keys are required to be unique within that scope.
+   (Section 3.8), or Boolean (Section 3.9).  It can have associated
+   parameters (Section 3.1.2).
 
    The ABNF for items in HTTP headers is:
 
@@ -488,6 +497,15 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    Note that commas in integers are used in this section's prose only
    for readability; they are not valid in the wire format.
 
+
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                 [Page 9]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
 3.5.  Floats
 
    Floats are decimal numbers with an integer and a fractional
@@ -497,14 +515,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    precision.
 
    The ABNF for floats in HTTP headers is:
-
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                 [Page 9]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    sh-float    = ["-"] (1*9DIGIT "." 1*6DIGIT /
                          10DIGIT "." 1*5DIGIT /
@@ -545,22 +555,18 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    a number of interoperability issues, and - with few exceptions -
    header values do not require it.
 
-   When it is necessary for a field value to convey non-ASCII string
-   content, a byte sequence (Section 3.8) SHOULD be specified, along
-   with a character encoding (preferably [UTF-8]).
-
-   Parsers MUST support strings with at least 1024 characters.
-
-
-
-
-
 
 
 Nottingham & Kamp        Expires April 10, 2020                [Page 10]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   When it is necessary for a field value to convey non-ASCII string
+   content, a byte sequence (Section 3.8) SHOULD be specified, along
+   with a character encoding (preferably [UTF-8]).
+
+   Parsers MUST support strings with at least 1024 characters.
 
 3.7.  Tokens
 
@@ -604,12 +610,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    sh-boolean = "?" boolean
    boolean    = "0" / "1"
 
-   In HTTP headers, a boolean is indicated with a leading "?" character
-   followed by a "1" for a true value or "0" for false.  For example:
-
-   Example-BoolHdr: ?1
-
-
 
 
 
@@ -617,6 +617,11 @@ Nottingham & Kamp        Expires April 10, 2020                [Page 11]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   In HTTP headers, a boolean is indicated with a leading "?" character
+   followed by a "1" for a true value or "0" for false.  For example:
+
+   Example-BoolHdr: ?1
 
 4.  Working With Structured Headers in HTTP Headers
 
@@ -660,12 +665,7 @@ Internet-Draft         Structured Headers for HTTP          October 2019
            Serialising an Inner List (Section 4.1.1.1) with member-value
            to output.
 
-       2.  Otherwise, append the result of applying Serializing an Item
-           (Section 4.1.3) with member-value to output.
 
-       3.  If more member-values remain in input_list:
-
-           1.  Append a COMMA to output.
 
 
 
@@ -673,6 +673,13 @@ Nottingham & Kamp        Expires April 10, 2020                [Page 12]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+       2.  Otherwise, append the result of applying Serializing an Item
+           (Section 4.1.3) with member-value to output.
+
+       3.  If more member-values remain in input_list:
+
+           1.  Append a COMMA to output.
 
            2.  Append a single WS to output.
 
@@ -714,13 +721,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
        1.  Append ";" to output.
 
-       2.  Append the result of applying Serializing a Key
-           (Section 4.1.1.3) with param-name to output.
-
-       3.  If param-value is not null:
-
-           1.  Append "=" to output.
-
 
 
 
@@ -729,6 +729,13 @@ Nottingham & Kamp        Expires April 10, 2020                [Page 13]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+       2.  Append the result of applying Serializing a Key
+           (Section 4.1.1.3) with param-name to output.
+
+       3.  If param-value is not null:
+
+           1.  Append "=" to output.
 
            2.  Append the result of applying Serializing a bare Item
                (Section 4.1.3.1) with param-value to output.
@@ -770,6 +777,15 @@ Internet-Draft         Structured Headers for HTTP          October 2019
            Serialising an Inner List (Section 4.1.1.1) with member-value
            to output.
 
+
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 14]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
        4.  Otherwise, append the result of applying Serializing an Item
            (Section 4.1.3) with member-value to output.
 
@@ -778,13 +794,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
            1.  Append a COMMA to output.
 
            2.  Append a single WS to output.
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 14]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    3.  Return output.
 
@@ -826,21 +835,19 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    6.  If input_item is a byte sequence, return the result of applying
        Serializing a Byte Sequence (Section 4.1.8) to input_item.
 
-   7.  Otherwise, fail serialisation.
-
-4.1.4.  Serializing an Integer
-
-   Given an integer as input_integer, return an ASCII string suitable
-   for use in a HTTP header value.
-
-
-
 
 
 Nottingham & Kamp        Expires April 10, 2020                [Page 15]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   7.  Otherwise, fail serialisation.
+
+4.1.4.  Serializing an Integer
+
+   Given an integer as input_integer, return an ASCII string suitable
+   for use in a HTTP header value.
 
    1.  If input_integer is not an integer in the range of
        -999,999,999,999,999 to 999,999,999,999,999 inclusive, fail
@@ -882,13 +889,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    8.   Append "." to output.
 
-   9.   Append at most fractional_digits_avail digits of input_float's
-        fractional component represented in base 10 to output (using
-        only decimal digits, and truncating any remaining digits); if it
-        is zero, append "0".
-
-   10.  Return output.
-
 
 
 
@@ -897,6 +897,13 @@ Nottingham & Kamp        Expires April 10, 2020                [Page 16]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   9.   Append at most fractional_digits_avail digits of input_float's
+        fractional component represented in base 10 to output (using
+        only decimal digits, and truncating any remaining digits); if it
+        is zero, append "0".
+
+   10.  Return output.
 
 4.1.6.  Serializing a String
 
@@ -938,6 +945,15 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    4.  Return output.
 
+
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 17]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
 4.1.8.  Serializing a Byte Sequence
 
    Given a byte sequence as input_bytes, return an ASCII string suitable
@@ -946,13 +962,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    1.  If input_bytes is not a sequence of bytes, fail serialisation.
 
    2.  Let output be an empty string.
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 17]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    3.  Append "*" to output.
 
@@ -992,6 +1001,15 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    When a receiving implementation parses HTTP header fields that are
    known to be Structured Headers, it is important that care be taken,
    as there are a number of edge cases that can cause interoperability
+
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 18]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
    or even security problems.  This section specifies the algorithm for
    doing so.
 
@@ -1002,13 +1020,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    1.  Convert input_bytes into an ASCII string input_string; if
        conversion fails, fail parsing.
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 18]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    2.  Discard any leading OWS from input_string.
 
@@ -1047,6 +1058,14 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    multiple headers because the inserted commas will cause parsing to
    fail.
 
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 19]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
    If parsing fails - including when calling another algorithm - the
    entire header field's value MUST be ignored (i.e., treated as if the
    header field were not present in the message).  This is intentionally
@@ -1057,14 +1076,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    is not parsing the header field; for example, an intermediary is not
    required to strip a failing header field from a message before
    forwarding it.
-
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 19]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
 4.2.1.  Parsing a List from Text
 
@@ -1103,6 +1114,14 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    bare item, or an array of (bare_item, parameters) tuples.
    input_string is modified to remove the parsed value.
 
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 20]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
    1.  If the first character of input_string is "(", let member be the
        result of running Parsing an Inner List (Section 4.2.1.2) with
        input_string.
@@ -1111,16 +1130,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
        (Section 4.2.3) with input_string.
 
    3.  Return member.
-
-
-
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 20]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
 4.2.1.2.  Parsing an Inner List
 
@@ -1162,21 +1171,19 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    values are (bare_item, parameters) tuples. input_string is modified
    to remove the parsed value.
 
-   1.  Let dictionary be an empty, ordered map.
-
-   2.  While input_string is not empty:
-
-       1.   Let this_key be the result of running Parsing a Key from
-            Text (Section 4.2.3.3) with input_string.
-
-
-
 
 
 Nottingham & Kamp        Expires April 10, 2020                [Page 21]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   1.  Let dictionary be an empty, ordered map.
+
+   2.  While input_string is not empty:
+
+       1.   Let this_key be the result of running Parsing a Key from
+            Text (Section 4.2.3.3) with input_string.
 
        2.   If dictionary already contains the name this_key, there is a
             duplicate; fail parsing.
@@ -1218,6 +1225,15 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    3.  Return the tuple (bare_item, parameters).
 
+
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 22]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
 4.2.3.1.  Parsing a Bare Item from Text
 
    Given an ASCII string as input_string, return a bare item.
@@ -1226,13 +1242,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    1.  If the first character of input_string is a "-" or a DIGIT,
        process input_string as a number (Section 4.2.4) and return the
        result.
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 22]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    2.  If the first character of input_string is a DQUOTE, process
        input_string as a string (Section 4.2.5) and return the result.
@@ -1274,6 +1283,13 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
        8.  If the first character of input_string is "=":
 
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 23]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
            1.  Consume the "=" character at the beginning of
                input_string.
 
@@ -1281,14 +1297,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
                Text (Section 4.2.3.1) from input_string.
 
        9.  Append key param_name with value param_value to parameters.
-
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 23]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    3.  Return parameters.
 
@@ -1331,6 +1339,13 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    4.   If the first character of input_string is "-", consume it and
         set sign to -1.
 
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 24]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
    5.   If input_string is empty, there is an empty integer; fail
         parsing.
 
@@ -1338,13 +1353,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
         parsing.
 
    7.   While input_string is not empty:
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 24]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
         1.  Let char be the result of consuming the first character of
             input_string.
@@ -1382,6 +1390,18 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    10.  Return output_number.
 
+
+
+
+
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 25]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
 4.2.5.  Parsing a String from Text
 
    Given an ASCII string as input_string, return an unquoted string.
@@ -1393,14 +1413,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
        parsing.
 
    3.  Discard the first character of input_string.
-
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 25]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    4.  While input_string is not empty:
 
@@ -1438,6 +1450,14 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    2.  Let output_string be an empty string.
 
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 26]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
    3.  While input_string is not empty:
 
        1.  If the first character of input_string is not one of ALPHA,
@@ -1450,13 +1470,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
        3.  Append char to output_string.
 
    4.  Return output_string.
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 26]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
 4.2.7.  Parsing a Byte Sequence from Text
 
@@ -1492,6 +1505,15 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    Because some implementations of base64 do not allow rejection of
    encoded data that has non-zero pad bits (see [RFC4648], Section 3.5),
+
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 27]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
    parsers SHOULD NOT fail when it is present, unless they cannot be
    configured to do so.
 
@@ -1505,14 +1527,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    is modified to remove the parsed value.
 
    1.  If the first character of input_string is not "?", fail parsing.
-
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 27]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    2.  Discard the first character of input_string.
 
@@ -1549,6 +1563,13 @@ Internet-Draft         Structured Headers for HTTP          October 2019
               RFC 20, DOI 10.17487/RFC0020, October 1969,
               <https://www.rfc-editor.org/info/rfc20>.
 
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 28]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -1562,13 +1583,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
               Specifications: ABNF", STD 68, RFC 5234,
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/info/rfc5234>.
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 28]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Message Syntax and Routing",
@@ -1604,6 +1618,14 @@ Internet-Draft         Structured Headers for HTTP          October 2019
               HTTP/2", RFC 7541, DOI 10.17487/RFC7541, May 2015,
               <https://www.rfc-editor.org/info/rfc7541>.
 
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 29]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
    [RFC8259]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", STD 90, RFC 8259,
               DOI 10.17487/RFC8259, December 2017,
@@ -1618,13 +1640,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    [1] https://lists.w3.org/Archives/Public/ietf-http-wg/
 
    [2] https://httpwg.github.io/
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 29]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    [3] https://github.com/httpwg/http-extensions/labels/header-structure
 
@@ -1659,6 +1674,14 @@ B.1.  Why not JSON?
 
    Another example is JSON's ability to nest content to arbitrary
    depths.  Since the resulting memory commitment might be unsuitable
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 30]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
    (e.g., in embedded and other limited server deployments), it's
    necessary to limit it in some fashion; however, existing JSON
    implementations have no such limits, and even if a limit is
@@ -1674,13 +1697,6 @@ B.1.  Why not JSON?
    Since a major goal for Structured Headers is to improve
    interoperability and simplify implementation, these concerns led to a
    format that requires a dedicated parser and serializer.
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 30]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    Additionally, there were widely shared feelings that JSON doesn't
    "look right" in HTTP headers.
@@ -1711,6 +1727,17 @@ B.2.  Structured Headers don't "fit" my data.
    If you need to fit arbitrarily complex data into a header, Structured
    Headers is probably a poor fit for your use case.
 
+
+
+
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 31]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
 Appendix C.  Implementation Notes
 
    A generic implementation of this specification should expose the top-
@@ -1730,14 +1757,6 @@ Appendix C.  Implementation Notes
 
    Likewise, implementations should note that it's important to preserve
    the distinction between tokens and strings.  While most programming
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 31]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
-
    languages have native types that map to the other types well, it may
    be necessary to create a wrapper "token" object or use a parameter on
    functions to assure that these types remain separate.
@@ -1766,6 +1785,15 @@ D.2.  Since draft-ietf-httpbis-header-structure-12
 
    o  Don't add a trailing space in inner-list (#904).
 
+
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 32]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
 D.3.  Since draft-ietf-httpbis-header-structure-11
 
    o  Allow * in key (#844).
@@ -1786,13 +1814,6 @@ D.4.  Since draft-ietf-httpbis-header-structure-10
    o  Allow empty dictionaries and lists (#781).
 
    o  Change parameterized lists to have primary items (#797).
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 32]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    o  Allow inner lists in both dictionaries and lists; removes lists of
       lists (#816).
@@ -1822,6 +1843,13 @@ D.6.  Since draft-ietf-httpbis-header-structure-08
 
    o  Added "Intentionally Strict Processing" (#684).
 
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 33]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
    o  Gave better names for referring specs to use in Parameterised
       Lists (#720).
 
@@ -1841,14 +1869,6 @@ D.7.  Since draft-ietf-httpbis-header-structure-07
    o  Changed "mapping" to "map" for #671.
 
    o  Don't fail if byte sequences aren't "=" padded (#658).
-
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 33]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    o  Add Booleans (#683).
 
@@ -1878,6 +1898,14 @@ D.9.  Since draft-ietf-httpbis-header-structure-05
    o  Refine relationship between ABNF, parsing and serialisation
       algorithms.
 
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 34]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
+
 D.10.  Since draft-ietf-httpbis-header-structure-04
 
    o  Remove identifiers from item.
@@ -1897,14 +1925,6 @@ D.12.  Since draft-ietf-httpbis-header-structure-02
    o  Define number parsing.
 
    o  Tighten up binary parsing and give it an explicit end delimiter.
-
-
-
-
-Nottingham & Kamp        Expires April 10, 2020                [Page 34]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
 
    o  Clarify that mappings are unordered.
 
@@ -1930,6 +1950,17 @@ D.14.  Since draft-ietf-httpbis-header-structure-00
       unicode-string.
 
    o  Change h1_blob delimiter to ":" since "'" is valid t_char
+
+
+
+
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 35]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
 
 Authors' Addresses
 
@@ -1957,4 +1988,29 @@ Authors' Addresses
 
 
 
-Nottingham & Kamp        Expires April 10, 2020                [Page 35]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nottingham & Kamp        Expires April 10, 2020                [Page 36]
