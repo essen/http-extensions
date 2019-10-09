@@ -1810,6 +1810,8 @@ D.1.  Since draft-ietf-httpbis-header-structure-13
    o  Removed most instances of the word "textual", as it was redundant
       (#915).
 
+   o  Allowed parameters on Items and Inner Lists (#907).
+
 D.2.  Since draft-ietf-httpbis-header-structure-12
 
    o  Editorial improvements.
@@ -1839,8 +1841,6 @@ D.4.  Since draft-ietf-httpbis-header-structure-10
 
    o  Change parameterized lists to have primary items (#797).
 
-   o  Allow inner lists in both dictionaries and lists; removes lists of
-      lists (#816).
 
 
 
@@ -1849,6 +1849,9 @@ Nottingham & Kamp        Expires April 11, 2020                [Page 33]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   o  Allow inner lists in both dictionaries and lists; removes lists of
+      lists (#816).
 
    o  Subsume Parameterised Lists into Lists (#839).
 
@@ -1895,9 +1898,6 @@ D.7.  Since draft-ietf-httpbis-header-structure-07
 
    o  Don't fail if byte sequences aren't "=" padded (#658).
 
-   o  Add Booleans (#683).
-
-   o  Allow identifiers in items again (#629).
 
 
 
@@ -1905,6 +1905,10 @@ Nottingham & Kamp        Expires April 11, 2020                [Page 34]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   o  Add Booleans (#683).
+
+   o  Allow identifiers in items again (#629).
 
    o  Disallowed whitespace before items (#703).
 
@@ -1950,10 +1954,6 @@ D.12.  Since draft-ietf-httpbis-header-structure-02
 
    o  Tighten up binary parsing and give it an explicit end delimiter.
 
-   o  Clarify that mappings are unordered.
-
-   o  Allow zero-length strings.
-
 
 
 
@@ -1961,6 +1961,10 @@ Nottingham & Kamp        Expires April 11, 2020                [Page 35]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   o  Clarify that mappings are unordered.
+
+   o  Allow zero-length strings.
 
    o  Improve string parsing algorithm.
 
@@ -1996,10 +2000,6 @@ Authors' Addresses
    The Varnish Cache Project
 
    Email: phk@varnish-cache.org
-
-
-
-
 
 
 
