@@ -1385,6 +1385,8 @@ D.1.  Since draft-ietf-httpbis-digest-headers-00
 
    o  Deprecate MD5
 
+   o  Obsolete ADLER-32 but don't forbid it
+
 Authors' Addresses
 
    Roberto Polli
@@ -1392,8 +1394,6 @@ Authors' Addresses
    Italy
 
    Email: robipolli@gmail.com
-
-
 
 
 
