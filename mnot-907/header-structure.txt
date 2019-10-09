@@ -381,10 +381,10 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    Note that the last member in this example is an empty inner list.
 
-   Parsers MUST support inner-lists containing at least 256 members.
-   Header specifications can constrain the types and cardinality of
-   individual inner-list members as they require.
+   A header field whose value is defined as a list of inner-lists with
+   parameters at both levels could look like:
 
+   Example-ListListParam: ("foo"; a=1;b=2);lvl=5, ("bar", "baz");lvl=1
 
 
 
@@ -393,6 +393,10 @@ Nottingham & Kamp        Expires April 11, 2020                 [Page 7]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   Parsers MUST support inner-lists containing at least 256 members.
+   Header specifications can constrain the types and cardinality of
+   individual inner-list members as they require.
 
 3.1.2.  Parameters
 
@@ -439,16 +443,16 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    member-name    = key
    member-value   = sh-item / inner-list
 
-   In HTTP headers, members are separated by a comma with optional
-   whitespace, while names and values are separated by "=" (without
-   whitespace).  For example:
-
 
 
 Nottingham & Kamp        Expires April 11, 2020                 [Page 8]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   In HTTP headers, members are separated by a comma with optional
+   whitespace, while names and values are separated by "=" (without
+   whitespace).  For example:
 
    Example-DictHeader: en="Applepie", da=*w4ZibGV0w6ZydGU=*
 
@@ -494,10 +498,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    The ABNF for integers in HTTP headers is:
 
-   sh-integer = ["-"] 1*15DIGIT
-
-   For example:
-
 
 
 
@@ -505,6 +505,10 @@ Nottingham & Kamp        Expires April 11, 2020                 [Page 9]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   sh-integer = ["-"] 1*15DIGIT
+
+   For example:
 
    Example-IntegerHeader: 42
 
@@ -550,10 +554,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    backslash ("\") to escape double quotes and backslashes.  For
    example:
 
-   Example-StringHeader: "hello world"
-
-
-
 
 
 
@@ -561,6 +561,8 @@ Nottingham & Kamp        Expires April 11, 2020                [Page 10]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   Example-StringHeader: "hello world"
 
    Note that strings only use DQUOTE as a delimiter; single quotes do
    not delimit strings.  Furthermore, only DQUOTE and "\" can be
@@ -608,8 +610,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    Parsers MUST support byte sequences with at least 16384 octets after
    decoding.
-
-
 
 
 
