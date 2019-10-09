@@ -267,12 +267,12 @@ Internet-Draft               Digest Headers                 October 2019
    [RFC7230].
 
    The definitions "representation", "selected representation",
-   "representation data", "representation metadata" and "payload body"
+   "representation data", "representation metadata", and "payload body"
    in this document are to be interpreted as described in [RFC7230] and
    [RFC7231].
 
-
-
+   The definition "validator" in this document is to be interpreted as
+   described in Section 7.2 of [RFC7231].
 
 
 
@@ -603,7 +603,7 @@ Internet-Draft               Digest Headers                 October 2019
    o  or not at all contained in the message body.
 
    The resource is specified by the effective request URI, the HTTP
-   semantics and any cache validator contained in the message.
+   semantics and any "validator" contained in the message.
 
    For example, in a response to a HEAD request, the digest is
    calculated using the representation data that would have been
