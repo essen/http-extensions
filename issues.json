@@ -848,9 +848,16 @@
       "site_admin": false
     },
     "labels": [
-
+      {
+        "id": 1345709527,
+        "node_id": "MDU6TGFiZWwxMzQ1NzA5NTI3",
+        "url": "https://api.github.com/repos/httpwg/http-extensions/labels/proxy-status",
+        "name": "proxy-status",
+        "color": "fbca04",
+        "default": false
+      }
     ],
-    "state": "open",
+    "state": "closed",
     "locked": false,
     "assignee": null,
     "assignees": [
@@ -859,8 +866,8 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2019-09-30T20:53:03Z",
-    "updated_at": "2019-09-30T20:53:26Z",
-    "closed_at": null,
+    "updated_at": "2019-10-18T18:44:36Z",
+    "closed_at": "2019-10-18T18:44:35Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
       "url": "https://api.github.com/repos/httpwg/http-extensions/pulls/941",
