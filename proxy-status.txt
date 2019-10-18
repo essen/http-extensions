@@ -786,7 +786,7 @@ Nottingham & Sikora      Expires April 20, 2020                [Page 14]
 Internet-Draft                Proxy-Status                  October 2019
 
 
-      *  details: a sh-string containing details about the error
+      *  error: a sh-string containing details about the error
          condition.
 
    o  Recommended HTTP status code: 500
