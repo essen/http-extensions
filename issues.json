@@ -321,9 +321,9 @@
 
     ],
     "milestone": null,
-    "comments": 5,
+    "comments": 8,
     "created_at": "2019-10-09T23:18:21Z",
-    "updated_at": "2019-10-22T23:56:39Z",
+    "updated_at": "2019-10-25T03:47:25Z",
     "closed_at": null,
     "author_association": "MEMBER",
     "pull_request": {
@@ -4543,7 +4543,7 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2019-07-31T11:05:16Z",
-    "updated_at": "2019-07-31T11:10:28Z",
+    "updated_at": "2019-10-23T06:31:06Z",
     "closed_at": "2019-07-31T11:10:28Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -4775,7 +4775,7 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2019-07-25T15:55:50Z",
-    "updated_at": "2019-07-29T04:19:25Z",
+    "updated_at": "2019-10-23T06:31:05Z",
     "closed_at": "2019-07-29T04:19:25Z",
     "author_association": "MEMBER",
     "pull_request": {
@@ -6568,7 +6568,7 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2019-07-08T11:35:14Z",
-    "updated_at": "2019-07-08T15:06:31Z",
+    "updated_at": "2019-10-23T06:30:29Z",
     "closed_at": "2019-07-08T15:06:31Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -6622,7 +6622,7 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2019-07-08T11:12:03Z",
-    "updated_at": "2019-07-08T15:06:46Z",
+    "updated_at": "2019-10-23T06:30:30Z",
     "closed_at": "2019-07-08T15:06:46Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -7603,7 +7603,7 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2019-07-03T09:15:12Z",
-    "updated_at": "2019-07-03T10:59:24Z",
+    "updated_at": "2019-10-23T06:30:31Z",
     "closed_at": "2019-07-03T10:59:24Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -7657,7 +7657,7 @@
     "milestone": null,
     "comments": 1,
     "created_at": "2019-07-03T08:50:39Z",
-    "updated_at": "2019-07-04T04:16:10Z",
+    "updated_at": "2019-10-23T06:30:32Z",
     "closed_at": "2019-07-03T09:10:39Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -8637,7 +8637,7 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2019-05-23T12:13:53Z",
-    "updated_at": "2019-05-31T07:06:47Z",
+    "updated_at": "2019-10-23T06:30:33Z",
     "closed_at": "2019-05-31T07:06:47Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -8846,9 +8846,9 @@
 
     ],
     "milestone": null,
-    "comments": 6,
+    "comments": 7,
     "created_at": "2019-05-03T01:51:02Z",
-    "updated_at": "2019-07-19T10:48:02Z",
+    "updated_at": "2019-10-23T06:19:11Z",
     "closed_at": null,
     "author_association": "CONTRIBUTOR",
     "body": "Currently, `Proxy-Status` draft defines only a single catch-all `http_request_error` error type for all issues with HTTP requests, and piggy-backs on the `4xx` status codes (`400`, `403`, `405`, `406`, `408`, `411`, `413`, `414`, `415`, `416`, `417`, `429`) for the exact reason as to why the request failed.\r\n\r\nThis is a bit inconsistent with the detailed error types it defines for issues with HTTP responses (`http_response_incomplete`, `http_protocol_error`, `http_response_header_block_size`, `http_response_header_size`, `http_response_body_size`, `http_response_transfer_coding`, `http_response_content_coding`, `http_response_timeout`).\r\n\r\nBut more importantly, it means that the `Proxy-Status` header isn't self-contained and it forces recipients to look in 2 places (`Proxy-Status` header and status code) to get the reason of the failure, and to take any action (log the error, etc.).\r\n\r\nWhile duplicating the information between `4xx` status codes and `Proxy-Status` type isn't ideal, the self-contained header seems to be worth it, IMHO.\r\n\r\nCurrent draft:\r\n```\r\nHTTP/1.1 411 Length Required\r\nProxy-Status: http_request_error\r\n```\r\n\r\nThis proposal:\r\n```\r\nHTTP/1.1 411 Length Required\r\nProxy-Status: http_request_length_required\r\n```\r\n\r\nThoughts?\r\n\r\ncc @alyssawilk @mnot"
@@ -9513,7 +9513,7 @@
     "milestone": null,
     "comments": 1,
     "created_at": "2019-05-02T06:14:03Z",
-    "updated_at": "2019-05-02T06:29:03Z",
+    "updated_at": "2019-10-23T06:30:34Z",
     "closed_at": "2019-05-02T06:28:58Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -9567,7 +9567,7 @@
     "milestone": null,
     "comments": 1,
     "created_at": "2019-05-02T06:09:52Z",
-    "updated_at": "2019-05-02T06:28:39Z",
+    "updated_at": "2019-10-23T06:30:35Z",
     "closed_at": "2019-05-02T06:28:34Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -9684,7 +9684,7 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2019-04-25T19:42:44Z",
-    "updated_at": "2019-07-22T20:00:51Z",
+    "updated_at": "2019-10-23T06:30:36Z",
     "closed_at": "2019-07-22T20:00:51Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -9910,7 +9910,7 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2019-04-17T08:38:52Z",
-    "updated_at": "2019-04-23T08:05:15Z",
+    "updated_at": "2019-10-23T06:30:37Z",
     "closed_at": "2019-04-23T08:05:14Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -13149,7 +13149,7 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2018-12-04T17:01:08Z",
-    "updated_at": "2018-12-04T22:06:52Z",
+    "updated_at": "2019-10-23T06:30:39Z",
     "closed_at": "2018-12-04T22:06:51Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -14516,7 +14516,7 @@
     "milestone": null,
     "comments": 4,
     "created_at": "2018-10-23T21:48:18Z",
-    "updated_at": "2019-04-25T19:24:06Z",
+    "updated_at": "2019-10-23T06:30:36Z",
     "closed_at": "2019-04-25T19:24:06Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -14585,7 +14585,7 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2018-10-23T21:29:51Z",
-    "updated_at": "2019-04-25T19:26:23Z",
+    "updated_at": "2019-10-23T06:30:40Z",
     "closed_at": "2019-04-25T19:26:23Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
@@ -14646,7 +14646,7 @@
     "milestone": null,
     "comments": 0,
     "created_at": "2018-10-23T20:59:28Z",
-    "updated_at": "2019-04-25T19:25:13Z",
+    "updated_at": "2019-10-23T06:30:40Z",
     "closed_at": "2019-04-25T19:25:13Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
