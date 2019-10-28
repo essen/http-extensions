@@ -5,8 +5,8 @@
 HTTP Working Group                                         M. Nottingham
 Internet-Draft                                                    Fastly
 Intended status: Standards Track                               P. Sikora
-Expires: April 28, 2020                                           Google
-                                                        October 26, 2019
+Expires: April 30, 2020                                           Google
+                                                        October 28, 2019
 
 
                    The Proxy-Status HTTP Header Field
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 28, 2020.
+   This Internet-Draft will expire on April 30, 2020.
 
 
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Nottingham & Sikora      Expires April 28, 2020                 [Page 1]
+Nottingham & Sikora      Expires April 30, 2020                 [Page 1]
 
 Internet-Draft                Proxy-Status                  October 2019
 
@@ -81,41 +81,41 @@ Table of Contents
      2.1.  Generic Proxy Status Parameters . . . . . . . . . . . . .   6
    3.  Proxy Status Types  . . . . . . . . . . . . . . . . . . . . .   6
      3.1.  DNS Timeout . . . . . . . . . . . . . . . . . . . . . . .   6
-     3.2.  DNS Error . . . . . . . . . . . . . . . . . . . . . . . .   6
+     3.2.  DNS Error . . . . . . . . . . . . . . . . . . . . . . . .   7
      3.3.  Destination Not Found . . . . . . . . . . . . . . . . . .   7
      3.4.  Destination Unavailable . . . . . . . . . . . . . . . . .   7
      3.5.  Destination IP Prohibited . . . . . . . . . . . . . . . .   7
-     3.6.  Destination IP Unroutable . . . . . . . . . . . . . . . .   7
+     3.6.  Destination IP Unroutable . . . . . . . . . . . . . . . .   8
      3.7.  Connection Refused  . . . . . . . . . . . . . . . . . . .   8
      3.8.  Connection Terminated . . . . . . . . . . . . . . . . . .   8
      3.9.  Connection Timeout  . . . . . . . . . . . . . . . . . . .   8
-     3.10. Connection Read Timeout . . . . . . . . . . . . . . . . .   8
+     3.10. Connection Read Timeout . . . . . . . . . . . . . . . . .   9
      3.11. Connection Write Timeout  . . . . . . . . . . . . . . . .   9
      3.12. Connection Limit Reached  . . . . . . . . . . . . . . . .   9
      3.13. HTTP Response Status  . . . . . . . . . . . . . . . . . .   9
-     3.14. HTTP Incomplete Response  . . . . . . . . . . . . . . . .   9
+     3.14. HTTP Incomplete Response  . . . . . . . . . . . . . . . .  10
      3.15. HTTP Protocol Error . . . . . . . . . . . . . . . . . . .  10
      3.16. HTTP Response Header Block Too Large  . . . . . . . . . .  10
      3.17. HTTP Response Header Too Large  . . . . . . . . . . . . .  10
      3.18. HTTP Response Body Too Large  . . . . . . . . . . . . . .  11
      3.19. HTTP Response Transfer-Coding Error . . . . . . . . . . .  11
      3.20. HTTP Response Content-Coding Error  . . . . . . . . . . .  11
-     3.21. HTTP Response Timeout . . . . . . . . . . . . . . . . . .  11
+     3.21. HTTP Response Timeout . . . . . . . . . . . . . . . . . .  12
      3.22. TLS Handshake Error . . . . . . . . . . . . . . . . . . .  12
      3.23. TLS Untrusted Peer Certificate  . . . . . . . . . . . . .  12
      3.24. TLS Expired Peer Certificate  . . . . . . . . . . . . . .  12
-     3.25. TLS Unexpected Peer Certificate . . . . . . . . . . . . .  12
+     3.25. TLS Unexpected Peer Certificate . . . . . . . . . . . . .  13
      3.26. TLS Missing Proxy Certificate . . . . . . . . . . . . . .  13
 
 
 
-Nottingham & Sikora      Expires April 28, 2020                 [Page 2]
+Nottingham & Sikora      Expires April 30, 2020                 [Page 2]
 
 Internet-Draft                Proxy-Status                  October 2019
 
 
      3.27. TLS Rejected Proxy Certificate  . . . . . . . . . . . . .  13
-     3.28. TLS Error . . . . . . . . . . . . . . . . . . . . . . . .  13
+     3.28. TLS Error . . . . . . . . . . . . . . . . . . . . . . . .  14
      3.29. HTTP Request Bad Request  . . . . . . . . . . . . . . . .  14
      3.30. HTTP Request Unauthorized . . . . . . . . . . . . . . . .  14
      3.31. HTTP Request Forbidden  . . . . . . . . . . . . . . . . .  14
@@ -126,7 +126,7 @@ Internet-Draft                Proxy-Status                  October 2019
      3.36. HTTP Request Timeout  . . . . . . . . . . . . . . . . . .  16
      3.37. HTTP Request Conflict . . . . . . . . . . . . . . . . . .  16
      3.38. HTTP Request Timeout  . . . . . . . . . . . . . . . . . .  16
-     3.39. HTTP Request Length Required  . . . . . . . . . . . . . .  16
+     3.39. HTTP Request Length Required  . . . . . . . . . . . . . .  17
      3.40. HTTP Request Precondition Failed  . . . . . . . . . . . .  17
      3.41. HTTP Request Payload Too Large  . . . . . . . . . . . . .  17
      3.42. HTTP Request URI Too Long . . . . . . . . . . . . . . . .  17
@@ -137,7 +137,7 @@ Internet-Draft                Proxy-Status                  October 2019
      3.47. HTTP Request Unprocessable Entity . . . . . . . . . . . .  19
      3.48. HTTP Request Locked . . . . . . . . . . . . . . . . . . .  19
      3.49. HTTP Request Failed Dependency  . . . . . . . . . . . . .  19
-     3.50. HTTP Request Too Early  . . . . . . . . . . . . . . . . .  19
+     3.50. HTTP Request Too Early  . . . . . . . . . . . . . . . . .  20
      3.51. HTTP Request Upgrade Required . . . . . . . . . . . . . .  20
      3.52. HTTP Request Precondition Required  . . . . . . . . . . .  20
      3.53. HTTP Request Too Many Requests  . . . . . . . . . . . . .  20
@@ -154,7 +154,7 @@ Internet-Draft                Proxy-Status                  October 2019
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  24
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .  24
      7.2.  Informative References  . . . . . . . . . . . . . . . . .  24
-     7.3.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .  24
+     7.3.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .  25
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  25
 
 1.  Introduction
@@ -165,7 +165,7 @@ Internet-Draft                Proxy-Status                  October 2019
 
 
 
-Nottingham & Sikora      Expires April 28, 2020                 [Page 3]
+Nottingham & Sikora      Expires April 30, 2020                 [Page 3]
 
 Internet-Draft                Proxy-Status                  October 2019
 
@@ -221,7 +221,7 @@ Internet-Draft                Proxy-Status                  October 2019
 
 
 
-Nottingham & Sikora      Expires April 28, 2020                 [Page 4]
+Nottingham & Sikora      Expires April 30, 2020                 [Page 4]
 
 Internet-Draft                Proxy-Status                  October 2019
 
@@ -237,8 +237,11 @@ Internet-Draft                Proxy-Status                  October 2019
 
    For example:
 
+
    HTTP/1.1 504 Gateway Timeout
+
    Proxy-Status: connection_timeout; proxy=SomeCDN; origin=abc; tries=3
+
 
    indicates the specific nature of the timeout as a connect timeout to
    the origin with the identifier "abc", and that is was generated by
@@ -247,8 +250,11 @@ Internet-Draft                Proxy-Status                  October 2019
 
    Or:
 
+
    HTTP/1.1 429 Too Many Requests
+
    Proxy-Status: http_request_error; proxy=SomeReverseProxy
+
 
    indicates that this 429 Too Many Requests response was generated by
    the intermediary, not the origin.
@@ -267,6 +273,15 @@ Internet-Draft                Proxy-Status                  October 2019
    this SHOULD NOT be done unless it is not possible to send it in
    headers.  For example, if an intermediary is streaming a response and
    the upstream connection suddenly terminates, Proxy-Status can be
+
+
+
+
+Nottingham & Sikora      Expires April 30, 2020                 [Page 5]
+
+Internet-Draft                Proxy-Status                  October 2019
+
+
    appended to the trailers of the outgoing message (since the headers
    have already been sent).
 
@@ -274,13 +289,6 @@ Internet-Draft                Proxy-Status                  October 2019
    intermediaries using the Proxy-Status header field; see Section 6.
 
    Origin servers MUST NOT generate the Proxy-Status header field.
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                 [Page 5]
-
-Internet-Draft                Proxy-Status                  October 2019
-
 
 2.1.  Generic Proxy Status Parameters
 
@@ -320,6 +328,16 @@ Internet-Draft                Proxy-Status                  October 2019
 
    o  Recommended HTTP status code: 504
 
+
+
+
+
+
+Nottingham & Sikora      Expires April 30, 2020                 [Page 6]
+
+Internet-Draft                Proxy-Status                  October 2019
+
+
 3.2.  DNS Error
 
    o  Name: dns_error
@@ -328,15 +346,6 @@ Internet-Draft                Proxy-Status                  October 2019
       to find an IP address for the destination hostname.
 
    o  Extra Parameters:
-
-
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                 [Page 6]
-
-Internet-Draft                Proxy-Status                  October 2019
-
 
       *  rcode: A sh-string conveying the DNS RCODE that indicates the
          error type.  See [RFC8499], Section 3.
@@ -377,6 +386,14 @@ Internet-Draft                Proxy-Status                  October 2019
    o  Description: The intermediary is configured to prohibit
       connections to the destination IP address.
 
+
+
+
+Nottingham & Sikora      Expires April 30, 2020                 [Page 7]
+
+Internet-Draft                Proxy-Status                  October 2019
+
+
    o  Extra Parameters: None.
 
    o  Recommended HTTP status code: 502
@@ -384,15 +401,6 @@ Internet-Draft                Proxy-Status                  October 2019
 3.6.  Destination IP Unroutable
 
    o  Name: destination_ip_unroutable
-
-
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                 [Page 7]
-
-Internet-Draft                Proxy-Status                  October 2019
-
 
    o  Description: The intermediary cannot find a route to the next hop
       IP address.
@@ -435,6 +443,13 @@ Internet-Draft                Proxy-Status                  October 2019
 
    o  Recommended HTTP status code: 504
 
+
+
+Nottingham & Sikora      Expires April 30, 2020                 [Page 8]
+
+Internet-Draft                Proxy-Status                  October 2019
+
+
 3.10.  Connection Read Timeout
 
    o  Name: connection_read_timeout
@@ -442,13 +457,6 @@ Internet-Draft                Proxy-Status                  October 2019
    o  Description: The intermediary was expecting data on a connection
       (e.g., part of a response), but did not receive any new data in a
       configured time limit.
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                 [Page 8]
-
-Internet-Draft                Proxy-Status                  October 2019
-
 
    o  Extra Parameters: None.
 
@@ -489,6 +497,15 @@ Internet-Draft                Proxy-Status                  October 2019
 
    o  Recommended HTTP status code:
 
+
+
+
+
+Nottingham & Sikora      Expires April 30, 2020                 [Page 9]
+
+Internet-Draft                Proxy-Status                  October 2019
+
+
 3.14.  HTTP Incomplete Response
 
    o  Name: http_response_incomplete
@@ -497,14 +514,6 @@ Internet-Draft                Proxy-Status                  October 2019
       the request from the next hop.
 
    o  Extra Parameters: None.
-
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                 [Page 9]
-
-Internet-Draft                Proxy-Status                  October 2019
-
 
    o  Recommended HTTP status code: 502
 
@@ -546,21 +555,17 @@ Internet-Draft                Proxy-Status                  October 2019
 
    o  Extra Parameters:
 
+
+
+Nottingham & Sikora      Expires April 30, 2020                [Page 10]
+
+Internet-Draft                Proxy-Status                  October 2019
+
+
       *  header_name: a sh-string indicating the name of the header that
          triggered the error.
 
    o  Recommended HTTP status code: 502
-
-
-
-
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 10]
-
-Internet-Draft                Proxy-Status                  October 2019
-
 
 3.18.  HTTP Response Body Too Large
 
@@ -605,18 +610,17 @@ Internet-Draft                Proxy-Status                  October 2019
 
    o  Recommended HTTP status code: 502
 
-3.21.  HTTP Response Timeout
-
-   o  Name: http_response_timeout
 
 
 
-
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 11]
+Nottingham & Sikora      Expires April 30, 2020                [Page 11]
 
 Internet-Draft                Proxy-Status                  October 2019
 
+
+3.21.  HTTP Response Timeout
+
+   o  Name: http_response_timeout
 
    o  Description: The intermediary reached a configured time limit
       waiting for the complete response.
@@ -661,18 +665,18 @@ Internet-Draft                Proxy-Status                  October 2019
 
    o  Recommended HTTP status code: 502
 
-3.25.  TLS Unexpected Peer Certificate
-
-   o  Name: tls_unexpected_peer_certificate
 
 
 
 
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 12]
+Nottingham & Sikora      Expires April 30, 2020                [Page 12]
 
 Internet-Draft                Proxy-Status                  October 2019
 
+
+3.25.  TLS Unexpected Peer Certificate
+
+   o  Name: tls_unexpected_peer_certificate
 
    o  Description: The intermediary received unexpected peer certificate
       (e.g., SPKI doesn't match) during TLS handshake with the next hop.
@@ -715,20 +719,23 @@ Internet-Draft                Proxy-Status                  October 2019
 
    o  Recommended HTTP status code: 500
 
+
+
+
+
+
+
+Nottingham & Sikora      Expires April 30, 2020                [Page 13]
+
+Internet-Draft                Proxy-Status                  October 2019
+
+
 3.28.  TLS Error
 
    o  Name: tls_error
 
    o  Description: The intermediary encountered a TLS error when
       communicating with the next hop.
-
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 13]
-
-Internet-Draft                Proxy-Status                  October 2019
-
 
    o  Extra Parameters:
 
@@ -772,19 +779,16 @@ Internet-Draft                Proxy-Status                  October 2019
       distinguish between responses generated by intermediaries from
       those generated by the origin.
 
-   o  Extra Parameters: None.
-
-   o  Recommended HTTP status code: 403
 
 
-
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 14]
+Nottingham & Sikora      Expires April 30, 2020                [Page 14]
 
 Internet-Draft                Proxy-Status                  October 2019
 
+
+   o  Extra Parameters: None.
+
+   o  Recommended HTTP status code: 403
 
 3.32.  HTTP Request Not Found
 
@@ -829,18 +833,19 @@ Internet-Draft                Proxy-Status                  October 2019
 
    o  Name: http_request_proxy_authentication_required
 
+
+
+
+
+Nottingham & Sikora      Expires April 30, 2020                [Page 15]
+
+Internet-Draft                Proxy-Status                  October 2019
+
+
    o  Description: The intermediary is generating a 407 (Proxy
       Authentication Required) response on the origin's behalf.  This
       proxy status type helps distinguish between responses generated by
       intermediaries from those generated by the origin.
-
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 15]
-
-Internet-Draft                Proxy-Status                  October 2019
-
 
    o  Extra Parameters: None.
 
@@ -885,18 +890,17 @@ Internet-Draft                Proxy-Status                  October 2019
 
    o  Recommended HTTP status code: 410
 
-3.39.  HTTP Request Length Required
-
-   o  Name: http_request_length_required
 
 
 
-
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 16]
+Nottingham & Sikora      Expires April 30, 2020                [Page 16]
 
 Internet-Draft                Proxy-Status                  October 2019
 
+
+3.39.  HTTP Request Length Required
+
+   o  Name: http_request_length_required
 
    o  Description: The intermediary is generating a 411 (Length
       Required) response on the origin's behalf.  This proxy status type
@@ -942,17 +946,17 @@ Internet-Draft                Proxy-Status                  October 2019
       distinguish between responses generated by intermediaries from
       those generated by the origin.
 
-   o  Extra Parameters: None.
-
-   o  Recommended HTTP status code: 414
 
 
 
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 17]
+Nottingham & Sikora      Expires April 30, 2020                [Page 17]
 
 Internet-Draft                Proxy-Status                  October 2019
 
+
+   o  Extra Parameters: None.
+
+   o  Recommended HTTP status code: 414
 
 3.43.  HTTP Request Unsupported Media Type
 
@@ -997,18 +1001,19 @@ Internet-Draft                Proxy-Status                  October 2019
 
    o  Name: http_request_misdirected_request
 
+
+
+
+
+Nottingham & Sikora      Expires April 30, 2020                [Page 18]
+
+Internet-Draft                Proxy-Status                  October 2019
+
+
    o  Description: The intermediary is generating a 421 (Misdirected
       Request) response on the origin's behalf.  This proxy status type
       helps distinguish between responses generated by intermediaries
       from those generated by the origin.
-
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 18]
-
-Internet-Draft                Proxy-Status                  October 2019
-
 
    o  Extra Parameters: None.
 
@@ -1053,18 +1058,17 @@ Internet-Draft                Proxy-Status                  October 2019
 
    o  Recommended HTTP status code: 424
 
-3.50.  HTTP Request Too Early
-
-   o  Name: http_request_too_early
 
 
 
-
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 19]
+Nottingham & Sikora      Expires April 30, 2020                [Page 19]
 
 Internet-Draft                Proxy-Status                  October 2019
 
+
+3.50.  HTTP Request Too Early
+
+   o  Name: http_request_too_early
 
    o  Description: The intermediary is generating a 425 (Too Early)
       response on the origin's behalf.  This proxy status type helps
@@ -1110,17 +1114,17 @@ Internet-Draft                Proxy-Status                  October 2019
       helps distinguish between responses generated by intermediaries
       from those generated by the origin.
 
-   o  Extra Parameters: None.
-
-   o  Recommended HTTP status code: 429
 
 
 
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 20]
+Nottingham & Sikora      Expires April 30, 2020                [Page 20]
 
 Internet-Draft                Proxy-Status                  October 2019
 
+
+   o  Extra Parameters: None.
+
+   o  Recommended HTTP status code: 429
 
 3.54.  HTTP Request Header Fields Too Large
 
@@ -1167,16 +1171,16 @@ Internet-Draft                Proxy-Status                  October 2019
    o  Description: The HTTP Upgrade between the intermediary and the
       next hop failed.
 
-   o  Extra Parameters: None.
-
-   o  Recommended HTTP status code: 502
 
 
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 21]
+Nottingham & Sikora      Expires April 30, 2020                [Page 21]
 
 Internet-Draft                Proxy-Status                  October 2019
 
+
+   o  Extra Parameters: None.
+
+   o  Recommended HTTP status code: 502
 
 3.58.  Proxy Internal Response
 
@@ -1221,18 +1225,18 @@ Internet-Draft                Proxy-Status                  October 2019
    New Proxy Status Types can be defined by registering them in the HTTP
    Proxy Status Types registry.
 
-   Registration requests are reviewed and approved by a Designated
-   Expert, as per [RFC8126], Section 4.5.  A specification document is
-   appreciated, but not required.
 
 
 
 
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 22]
+Nottingham & Sikora      Expires April 30, 2020                [Page 22]
 
 Internet-Draft                Proxy-Status                  October 2019
 
+
+   Registration requests are reviewed and approved by a Designated
+   Expert, as per [RFC8126], Section 4.5.  A specification document is
+   appreciated, but not required.
 
    The Expert(s) should consider the following factors when evaluating
    requests:
@@ -1279,16 +1283,14 @@ Internet-Draft                Proxy-Status                  October 2019
    conditionally generate them based upon request attributes (e.g.,
    authentication tokens, IP address).
 
-   Likewise, generation of all parameters is optional.
 
 
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 23]
+Nottingham & Sikora      Expires April 30, 2020                [Page 23]
 
 Internet-Draft                Proxy-Status                  October 2019
 
+
+   Likewise, generation of all parameters is optional.
 
    Special care needs to be taken in generating proxy and origin
    parameters, as they can expose information about the intermediary's
@@ -1333,18 +1335,22 @@ Internet-Draft                Proxy-Status                  October 2019
               DOI 10.17487/RFC8586, April 2019,
               <https://www.rfc-editor.org/info/rfc8586>.
 
+
+
+
+
+
+
+Nottingham & Sikora      Expires April 30, 2020                [Page 24]
+
+Internet-Draft                Proxy-Status                  October 2019
+
+
 7.3.  URIs
 
    [1] https://lists.w3.org/Archives/Public/ietf-http-wg/
 
    [2] https://httpwg.org/
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 24]
-
-Internet-Draft                Proxy-Status                  October 2019
-
 
    [3] https://github.com/httpwg/http-extensions/labels/proxy-status
 
@@ -1391,10 +1397,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-Nottingham & Sikora      Expires April 28, 2020                [Page 25]
+Nottingham & Sikora      Expires April 30, 2020                [Page 25]
