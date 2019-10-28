@@ -413,7 +413,7 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    The ABNF for inner-lists in HTTP headers is:
 
 
-  inner-list    = "(" OWS [ sh-item *( SP sh-item ) OWS ] ")" *parameter
+inner-list    = "(" OWS [ sh-item *( SP OWS sh-item ) OWS ] ")" *parameter
 
 
    In HTTP headers, inner lists are denoted by surrounding parenthesis,
