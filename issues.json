@@ -158,9 +158,9 @@
 
     ],
     "milestone": null,
-    "comments": 0,
+    "comments": 2,
     "created_at": "2019-10-25T05:45:00Z",
-    "updated_at": "2019-10-25T06:24:25Z",
+    "updated_at": "2019-10-27T23:27:56Z",
     "closed_at": null,
     "author_association": "MEMBER",
     "body": "* [ ] inner-list ABNF specifies single SP, but parsing eats OWS\r\n* [ ] token doesn't allow +, which is common in media types. Other chars too?\r\n* [ ] explicitly talk about parameter extensibility\r\n* [ ] revise authoring advice\r\n* [ ] check all examples for parseability\r\n* [ ] summarise the relationships between the datatypes (e.g., in an intro subsection)\r\n"
@@ -771,9 +771,9 @@
 
     ],
     "milestone": null,
-    "comments": 1,
+    "comments": 2,
     "created_at": "2019-10-09T09:16:01Z",
-    "updated_at": "2019-10-25T15:06:13Z",
+    "updated_at": "2019-10-28T00:34:01Z",
     "closed_at": null,
     "author_association": "CONTRIBUTOR",
     "body": "## I expect\r\n\r\nTo clarify relations between Digest and Caching.\r\n\r\n- [ ] #936 \r\n- [x] #940 \r\n\r\nMoreover address  Digest behavior with:\r\n\r\n- `If-Modified-Since` and `304` with an empty body: do we have all the relevant metadata to compute and reply with the digest?"
