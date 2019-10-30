@@ -114,19 +114,19 @@ Nottingham & Kamp          Expires May 2, 2020                  [Page 2]
 Internet-Draft         Structured Headers for HTTP          October 2019
 
 
-     D.2.  Since draft-ietf-httpbis-header-structure-12  . . . . . .  36
+     D.2.  Since draft-ietf-httpbis-header-structure-12  . . . . . .  35
      D.3.  Since draft-ietf-httpbis-header-structure-11  . . . . . .  36
      D.4.  Since draft-ietf-httpbis-header-structure-10  . . . . . .  36
      D.5.  Since draft-ietf-httpbis-header-structure-09  . . . . . .  36
      D.6.  Since draft-ietf-httpbis-header-structure-08  . . . . . .  36
      D.7.  Since draft-ietf-httpbis-header-structure-07  . . . . . .  37
      D.8.  Since draft-ietf-httpbis-header-structure-06  . . . . . .  37
-     D.9.  Since draft-ietf-httpbis-header-structure-05  . . . . . .  38
+     D.9.  Since draft-ietf-httpbis-header-structure-05  . . . . . .  37
      D.10. Since draft-ietf-httpbis-header-structure-04  . . . . . .  38
      D.11. Since draft-ietf-httpbis-header-structure-03  . . . . . .  38
      D.12. Since draft-ietf-httpbis-header-structure-02  . . . . . .  38
      D.13. Since draft-ietf-httpbis-header-structure-01  . . . . . .  38
-     D.14. Since draft-ietf-httpbis-header-structure-00  . . . . . .  39
+     D.14. Since draft-ietf-httpbis-header-structure-00  . . . . . .  38
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  39
 
 1.  Introduction
@@ -733,14 +733,15 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    The ABNF for tokens in HTTP headers is:
 
 
-   sh-token = ALPHA *tchar
+   sh-token = ALPHA *( tchar / ":" / "/" )
 
 
    Parsers MUST support tokens with at least 512 characters.
 
-   Note that a Structured Header token allows the same characters as the
-   "token" ABNF rule defined in [RFC7230], with the exception that the
-   first character is required to be ALPHA.
+   Note that a Structured Header token allows the characters as the
+   "token" ABNF rule defined in [RFC7230], with the exceptions that the
+   first character is required to be ALPHA, and ":" and "/" are also
+   allowed.
 
 3.3.5.  Byte Sequences
 
@@ -776,14 +777,17 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    boolean    = "0" / "1"
 
 
-   In HTTP headers, a boolean is indicated with a leading "?" character
-   followed by a "1" for a true value or "0" for false.  For example:
+
 
 
 
 Nottingham & Kamp          Expires May 2, 2020                 [Page 14]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
+
+
+   In HTTP headers, a boolean is indicated with a leading "?" character
+   followed by a "1" for a true value or "0" for false.  For example:
 
 
    Example-BoolHdr: ?1
@@ -829,10 +833,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
 
    2.  For each (member-value, parameters) of input_list:
 
-       1.  If member-value is an array, append the result of running
-           Serialising an Inner List (Section 4.1.1.1) with (member-
-           value, parameters) to output.
-
 
 
 
@@ -841,6 +841,10 @@ Nottingham & Kamp          Expires May 2, 2020                 [Page 15]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+       1.  If member-value is an array, append the result of running
+           Serialising an Inner List (Section 4.1.1.1) with (member-
+           value, parameters) to output.
 
        2.  Otherwise, append the result of running Serializing an Item
            (Section 4.1.3) with (member-value, parameters) to output.
@@ -887,16 +891,14 @@ Internet-Draft         Structured Headers for HTTP          October 2019
    2.  For each parameter-name with a value of param-value in
        input_parameters:
 
-       1.  Append ";" to output.
-
-
-
 
 
 Nottingham & Kamp          Expires May 2, 2020                 [Page 16]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+       1.  Append ";" to output.
 
        2.  Append the result of running Serializing a Key
            (Section 4.1.1.3) with param-name to output.
@@ -944,8 +946,6 @@ Internet-Draft         Structured Headers for HTTP          October 2019
        3.  If member-value is an array, append the result of running
            Serialising an Inner List (Section 4.1.1.1) with (member-
            value, parameters) to output.
-
-
 
 
 
@@ -1947,13 +1947,13 @@ D.1.  Since draft-ietf-httpbis-header-structure-13
 
    o  Allowed parameters on Items and Inner Lists (#907).
 
-   o  Expand the range of characters in token to match HTTP token
-      (excepting the first character) (#961).
+   o  Expand the range of characters in token (#961).
 
+D.2.  Since draft-ietf-httpbis-header-structure-12
 
+   o  Editorial improvements.
 
-
-
+   o  Reworked float serialisation (#896).
 
 
 
@@ -1961,12 +1961,6 @@ Nottingham & Kamp          Expires May 2, 2020                 [Page 35]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
-
-D.2.  Since draft-ietf-httpbis-header-structure-12
-
-   o  Editorial improvements.
-
-   o  Reworked float serialisation (#896).
 
    o  Don't add a trailing space in inner-list (#904).
 
@@ -2008,16 +2002,6 @@ D.6.  Since draft-ietf-httpbis-header-structure-08
 
    o  Disallow whitespace before items properly (#703).
 
-
-
-
-
-
-Nottingham & Kamp          Expires May 2, 2020                 [Page 36]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
-
    o  Created "key" for use in dictionaries and parameters, rather than
       relying on identifier (#702).  Identifiers have a separate minimum
       supported size.
@@ -2026,6 +2010,13 @@ Internet-Draft         Structured Headers for HTTP          October 2019
       include all of ALPHA, ".", ":", and "%" (#702).
 
    o  Use "?" instead of "!" to indicate a Boolean (#719).
+
+
+
+Nottingham & Kamp          Expires May 2, 2020                 [Page 36]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
 
    o  Added "Intentionally Strict Processing" (#684).
 
@@ -2066,14 +2057,6 @@ D.8.  Since draft-ietf-httpbis-header-structure-06
 
    o  Explicitly check for integers that violate constraints.
 
-
-
-
-Nottingham & Kamp          Expires May 2, 2020                 [Page 37]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
-
 D.9.  Since draft-ietf-httpbis-header-structure-05
 
    o  Reorganise specification to separate parsing out.
@@ -2081,6 +2064,15 @@ D.9.  Since draft-ietf-httpbis-header-structure-05
    o  Allow referencing specs to use ABNF.
 
    o  Define serialisation algorithms.
+
+
+
+
+
+Nottingham & Kamp          Expires May 2, 2020                 [Page 37]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
 
    o  Refine relationship between ABNF, parsing and serialisation
       algorithms.
@@ -2121,15 +2113,6 @@ D.13.  Since draft-ietf-httpbis-header-structure-01
 
    o  Replaced with draft-nottingham-structured-headers.
 
-
-
-
-
-Nottingham & Kamp          Expires May 2, 2020                 [Page 38]
-
-Internet-Draft         Structured Headers for HTTP          October 2019
-
-
 D.14.  Since draft-ietf-httpbis-header-structure-00
 
    o  Added signed 64bit integer type.
@@ -2138,6 +2121,14 @@ D.14.  Since draft-ietf-httpbis-header-structure-00
       unicode-string.
 
    o  Change h1_blob delimiter to ":" since "'" is valid t_char
+
+
+
+
+Nottingham & Kamp          Expires May 2, 2020                 [Page 38]
+
+Internet-Draft         Structured Headers for HTTP          October 2019
+
 
 Authors' Addresses
 
@@ -2152,6 +2143,15 @@ Authors' Addresses
    The Varnish Cache Project
 
    Email: phk@varnish-cache.org
+
+
+
+
+
+
+
+
+
 
 
 
