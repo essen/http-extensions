@@ -340,7 +340,7 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 Content-Encoding: gzip
 
-</pre></div></div><div id="rfc.section.2.p.14"><p>Finally the semantics of an HTTP response may decouple the effective request URI from the enclosed representation. In the example below, the <span class="tt">Content-Location</span> metadata header field explicits that the representation enclosed in the response refers to the resource available at <span class="tt">/authors/123</span>.</p></div><div id="rfc.section.2.p.15" class="avoidbreakafter"><p>Request:</p></div><div id="rfc.figure.u.7"><div><pre>
+</pre></div></div><div id="rfc.section.2.p.14"><p>Finally the semantics of an HTTP response may decouple the effective request URI from the enclosed representation. In the example response below, the <span class="tt">Content-Location</span> header field indicates that the enclosed representation refers to the resource available at <span class="tt">/authors/123</span>.</p></div><div id="rfc.section.2.p.15" class="avoidbreakafter"><p>Request:</p></div><div id="rfc.figure.u.7"><div><pre>
 POST /authors/ HTTP/1.1
 Accept: application/json
 Content-Type: application/json
