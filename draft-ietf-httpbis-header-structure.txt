@@ -1870,6 +1870,8 @@ D.1.  Since draft-ietf-httpbis-header-structure-13
 
    o  Expand the range of characters in token (#961).
 
+   o  Disallow OWS before ";" delimiter in parameters (#961).
+
 D.2.  Since draft-ietf-httpbis-header-structure-12
 
    o  Editorial improvements.
@@ -1897,14 +1899,14 @@ D.4.  Since draft-ietf-httpbis-header-structure-10
 
    o  Allow empty dictionaries and lists (#781).
 
-   o  Change parameterized lists to have primary items (#797).
-
 
 
 Nottingham & Kamp          Expires May 3, 2020                 [Page 34]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   o  Change parameterized lists to have primary items (#797).
 
    o  Allow inner lists in both dictionaries and lists; removes lists of
       lists (#816).
@@ -1952,8 +1954,6 @@ D.7.  Since draft-ietf-httpbis-header-structure-07
 
    o  Changed "mapping" to "map" for #671.
 
-   o  Don't fail if byte sequences aren't "=" padded (#658).
-
 
 
 
@@ -1961,6 +1961,8 @@ Nottingham & Kamp          Expires May 3, 2020                 [Page 35]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   o  Don't fail if byte sequences aren't "=" padded (#658).
 
    o  Add Booleans (#683).
 
@@ -2008,8 +2010,6 @@ D.12.  Since draft-ietf-httpbis-header-structure-02
 
    o  Define number parsing.
 
-   o  Tighten up binary parsing and give it an explicit end delimiter.
-
 
 
 
@@ -2017,6 +2017,8 @@ Nottingham & Kamp          Expires May 3, 2020                 [Page 36]
 
 Internet-Draft         Structured Headers for HTTP          October 2019
 
+
+   o  Tighten up binary parsing and give it an explicit end delimiter.
 
    o  Clarify that mappings are unordered.
 
@@ -2056,8 +2058,6 @@ Authors' Addresses
    The Varnish Cache Project
 
    Email: phk@varnish-cache.org
-
-
 
 
 
