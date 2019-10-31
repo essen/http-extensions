@@ -976,9 +976,7 @@ Internet-Draft               Digest Headers                 October 2019
    of a resource representation, signing only the "Digest" header field,
    without all the "representation metatada" (eg.  the values of
    "Content-Type", "Content-Encoding" and "Content-Location") may expose
-   the communication to tampering.
-
-   See also Section 8.5.
+   the communication to tampering.  See also Section 8.5.
 
    "Digest" SHOULD always be used over a connection which provides
    integrity at transport layer that protects HTTP header fields.
@@ -1000,6 +998,8 @@ Internet-Draft               Digest Headers                 October 2019
 
    This memo sets this spec to be the establishing document for the HTTP
    Digest Algorithm Values [4]
+
+
 
 
 
