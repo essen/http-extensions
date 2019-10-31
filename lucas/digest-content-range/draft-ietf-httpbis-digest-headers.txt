@@ -83,14 +83,14 @@ Table of Contents
    2.  Resource representation and representation-data . . . . . . .   6
    3.  Digest Algorithm values . . . . . . . . . . . . . . . . . . .   7
      3.1.  Representation digest . . . . . . . . . . . . . . . . . .   9
-       3.1.1.  digest-algorithm encoding examples  . . . . . . . . .   9
+       3.1.1.  digest-algorithm encoding examples  . . . . . . . . .  10
    4.  Header Field Specifications . . . . . . . . . . . . . . . . .  10
      4.1.  Want-Digest . . . . . . . . . . . . . . . . . . . . . . .  10
      4.2.  Digest  . . . . . . . . . . . . . . . . . . . . . . . . .  10
    5.  Deprecate Negotiation of Content-MD5  . . . . . . . . . . . .  11
    6.  Broken cryptographic algorithms . . . . . . . . . . . . . . .  11
-   7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  11
-     7.1.  Unsolicited Digest response . . . . . . . . . . . . . . .  11
+   7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
+     7.1.  Unsolicited Digest response . . . . . . . . . . . . . . .  12
        7.1.1.  Representation data is fully contained in the payload  12
        7.1.2.  Representation data is not contained in the payload .  12
        7.1.3.  Representation data is partially contained in the
@@ -458,15 +458,25 @@ Internet-Draft               Digest Headers                 October 2019
    independent from "Content-Encoding", the following additional
    algorithms are defined:
 
-   ID-SHA-512: : * Description: The sha-512 digest of the
-   representation-data of the resource when no content coding is applied
-   (eg.  "Content-Encoding: identity") * Reference: [RFC6234],
-   [RFC4648], this document.  * Status: standard
+   ID-SHA-512:
 
-   ID-SHA-256: : * Description: The sha-256 digest of the
-   representation-data of the resource when no content coding is applied
-   (eg.  "Content-Encoding: identity") * Reference: [RFC6234],
-   [RFC4648], this document.  * Status: standard
+      *  Description: The sha-512 digest of the representation-data of
+         the resource when no content coding is applied (eg.  "Content-
+         Encoding: identity")
+
+      *  Reference: [RFC6234], [RFC4648], this document.
+
+      *  Status: standard
+
+   ID-SHA-256:
+
+      *  Description: The sha-256 digest of the representation-data of
+         the resource when no content coding is applied (eg.  "Content-
+         Encoding: identity")
+
+      *  Reference: [RFC6234], [RFC4648], this document.
+
+      *  Status: standard
 
    If other digest-algorithm values are defined, the associated encoding
    MUST either be represented as a quoted string, or MUST NOT include
@@ -489,6 +499,13 @@ Internet-Draft               Digest Headers                 October 2019
    The encoded digest output uses the encoding format defined for the
    specific digest-algorithm.
 
+
+
+Polli & Pardue             Expires May 3, 2020                  [Page 9]
+
+Internet-Draft               Digest Headers                 October 2019
+
+
 3.1.1.  digest-algorithm encoding examples
 
    The "sha-256" digest-algorithm uses base64 encoding.  Note that
@@ -497,14 +514,6 @@ Internet-Draft               Digest Headers                 October 2019
       sha-256=X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE=
 
    The "UNIXsum" digest-algorithm uses ASCII string of decimal digits.
-
-
-
-
-Polli & Pardue             Expires May 3, 2020                  [Page 9]
-
-Internet-Draft               Digest Headers                 October 2019
-
 
       UNIXsum=30637
 
@@ -546,6 +555,13 @@ Internet-Draft               Digest Headers                 October 2019
 
    "Representation data" might be:
 
+
+
+Polli & Pardue             Expires May 3, 2020                 [Page 10]
+
+Internet-Draft               Digest Headers                 October 2019
+
+
    o  fully contained in the message body,
 
    o  partially-contained in the message body,
@@ -554,13 +570,6 @@ Internet-Draft               Digest Headers                 October 2019
 
    The resource is specified by the effective request URI and any
    "validator" contained in the message.
-
-
-
-Polli & Pardue             Expires May 3, 2020                 [Page 10]
-
-Internet-Draft               Digest Headers                 October 2019
-
 
    For example, in a response to a HEAD request, the digest is
    calculated using the representation data that would have been
@@ -602,21 +611,16 @@ Internet-Draft               Digest Headers                 October 2019
    The SHA algorithm is NOT RECOMMENDED as it's now vulnerable to
    collision attacks [IACR-2019-459].
 
-7.  Examples
-
-7.1.  Unsolicited Digest response
-
-
-
-
-
-
 
 
 Polli & Pardue             Expires May 3, 2020                 [Page 11]
 
 Internet-Draft               Digest Headers                 October 2019
 
+
+7.  Examples
+
+7.1.  Unsolicited Digest response
 
 7.1.1.  Representation data is fully contained in the payload
 
@@ -662,10 +666,6 @@ Internet-Draft               Digest Headers                 October 2019
 
 
    Response:
-
-
-
-
 
 
 
