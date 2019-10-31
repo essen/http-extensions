@@ -843,9 +843,7 @@ the certain identification of the origin of a message [NIST800-32].
 It's important to note that, being the `Digest` header field an hash of a resource representation,
 signing only the `Digest` header field, without all the `representation metatada` (eg.
 the values of `Content-Type`, `Content-Encoding` and `Content-Location`) may expose the communication
-to tampering.
-
-See also {{digest-and-content-location}}.
+to tampering. See also {{digest-and-content-location}}.
 
 `Digest` SHOULD always be used over a connection which provides
 integrity at transport layer that protects HTTP header fields.
