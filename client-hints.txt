@@ -88,16 +88,16 @@ Table of Contents
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
      5.1.  Accept-CH . . . . . . . . . . . . . . . . . . . . . . . .   7
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .   9
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .   8
      6.3.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .   9
    Appendix A.  Interaction with Variants Response Header Field  . .   9
    Appendix B.  Changes  . . . . . . . . . . . . . . . . . . . . . .   9
      B.1.  Since -00 . . . . . . . . . . . . . . . . . . . . . . . .   9
      B.2.  Since -01 . . . . . . . . . . . . . . . . . . . . . . . .   9
-     B.3.  Since -02 . . . . . . . . . . . . . . . . . . . . . . . .  10
-     B.4.  Since -03 . . . . . . . . . . . . . . . . . . . . . . . .  10
+     B.3.  Since -02 . . . . . . . . . . . . . . . . . . . . . . . .   9
+     B.4.  Since -03 . . . . . . . . . . . . . . . . . . . . . . . .   9
      B.5.  Since -04 . . . . . . . . . . . . . . . . . . . . . . . .  10
      B.6.  Since -05 . . . . . . . . . . . . . . . . . . . . . . . .  10
      B.7.  Since -06 . . . . . . . . . . . . . . . . . . . . . . . .  10
@@ -256,15 +256,11 @@ Internet-Draft              HTTP Client Hints               October 2019
    [I-D.ietf-httpbis-header-structure]) whose members are tokens
    (Section 3.7 of [I-D.ietf-httpbis-header-structure]).  Its ABNF is:
 
-
      Accept-CH = sh-list
-
 
    For example:
 
-
      Accept-CH: Sec-CH-Example, Sec-CH-Example-2
-
 
    When a client receives an HTTP response advertising support for
    provided list of Clients Hints, it SHOULD process it as origin
@@ -272,24 +268,18 @@ Internet-Draft              HTTP Client Hints               October 2019
    the field-value, for subsequent same-origin requests.
 
    o  The opt-in MUST be delivered over a secure transport.
+   o  The opt-in SHOULD be persisted and bound to the origin to enable
+      delivery of Client Hints on subsequent requests to the server's
+      origin, and MUST NOT be persisted for an origin that isn't HTTPS.
 
-
+     Accept-CH: Sec-CH-Example, Sec-CH-Example-2
+     Accept-CH: Sec-CH-Example-3
 
 
 
 Grigorik & Weiss           Expires May 3, 2020                  [Page 5]
 
 Internet-Draft              HTTP Client Hints               October 2019
-
-
-   o  The opt-in SHOULD be persisted and bound to the origin to enable
-      delivery of Client Hints on subsequent requests to the server's
-      origin, and MUST NOT be persisted for an origin that isn't HTTPS.
-
-
-     Accept-CH: Sec-CH-Example, Sec-CH-Example-2
-
-     Accept-CH: Sec-CH-Example-3
 
 
    For example, based on the Accept-CH example above, which is received
@@ -309,16 +299,12 @@ Internet-Draft              HTTP Client Hints               October 2019
    affect the selected response and whether the selected response is
    appropriate for a later request.
 
-
      Vary: Sec-CH-Example
-
 
    Above example indicates that the cache key needs to include the Sec-
    CH-Example header field.
 
-
      Vary: Sec-CH-Example, Sec-CH-Example-2
-
 
    Above example indicates that the cache key needs to include the Sec-
    CH-Example and Sec-CH-Example-2 header fields.
@@ -331,13 +317,6 @@ Internet-Draft              HTTP Client Hints               October 2019
    information about the user and implementers ought to consider the
    following considerations, recommendations, and best practices.
 
-
-
-Grigorik & Weiss           Expires May 3, 2020                  [Page 6]
-
-Internet-Draft              HTTP Client Hints               October 2019
-
-
    Transmitted Client Hints header fields SHOULD NOT provide new
    information that is otherwise not available to the application via
    other means, such as using HTML, CSS, or JavaScript.  Further,
@@ -349,6 +328,15 @@ Internet-Draft              HTTP Client Hints               October 2019
    reduce risk of linkability by ensuring that the same value is sent by
    multiple users.  However, such precautions can still be insufficient
    for some types of data, especially data that can change over time.
+
+
+
+
+
+Grigorik & Weiss           Expires May 3, 2020                  [Page 6]
+
+Internet-Draft              HTTP Client Hints               October 2019
+
 
    Implementers ought to consider both user and server controlled
    mechanisms and policies to control which Client Hints header fields
@@ -386,14 +374,6 @@ Internet-Draft              HTTP Client Hints               October 2019
    o  Specification document(s): Section 3.1 of this document
    o  Related information: for Client Hints
 
-
-
-
-Grigorik & Weiss           Expires May 3, 2020                  [Page 7]
-
-Internet-Draft              HTTP Client Hints               October 2019
-
-
 6.  References
 
 6.1.  Normative References
@@ -403,6 +383,16 @@ Internet-Draft              HTTP Client Hints               October 2019
               World Wide Web Consortium Recommendation REC-
               html5-20141028, October 2014,
               <http://www.w3.org/TR/2014/REC-html5-20141028>.
+
+
+
+
+
+
+Grigorik & Weiss           Expires May 3, 2020                  [Page 7]
+
+Internet-Draft              HTTP Client Hints               October 2019
+
 
    [I-D.ietf-httpbis-header-structure]
               Nottingham, M. and P. Kamp, "Structured Headers for HTTP",
@@ -442,14 +432,6 @@ Internet-Draft              HTTP Client Hints               October 2019
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
-
-
-
-Grigorik & Weiss           Expires May 3, 2020                  [Page 8]
-
-Internet-Draft              HTTP Client Hints               October 2019
-
-
 6.2.  Informative References
 
    [KEY]      Fielding, R. and M. Nottingham, "The Key HTTP Response
@@ -459,6 +441,14 @@ Internet-Draft              HTTP Client Hints               October 2019
    [RFC6265]  Barth, A., "HTTP State Management Mechanism", RFC 6265,
               DOI 10.17487/RFC6265, April 2011,
               <https://www.rfc-editor.org/info/rfc6265>.
+
+
+
+
+Grigorik & Weiss           Expires May 3, 2020                  [Page 8]
+
+Internet-Draft              HTTP Client Hints               October 2019
+
 
    [VARIANTS]
               Nottingham, M., "HTTP Representation Variants", draft-
@@ -496,16 +486,6 @@ B.2.  Since -01
       considerations.
    o  Changed document status to experimental.
 
-
-
-
-
-
-Grigorik & Weiss           Expires May 3, 2020                  [Page 9]
-
-Internet-Draft              HTTP Client Hints               October 2019
-
-
 B.3.  Since -02
 
    o  Issue 239: Updated reference to CR-css-values-3
@@ -518,6 +498,13 @@ B.4.  Since -03
    o  Issue 284: Extended guidance for Accept-CH
    o  Issue 308: Editorial cleanup
    o  Issue 306: Define Accept-CH-Lifetime
+
+
+
+Grigorik & Weiss           Expires May 3, 2020                  [Page 9]
+
+Internet-Draft              HTTP Client Hints               October 2019
+
 
 B.5.  Since -04
 
@@ -554,14 +541,6 @@ Authors' Addresses
    URI:   https://www.igvita.com/
 
 
-
-
-
-Grigorik & Weiss           Expires May 3, 2020                 [Page 10]
-
-Internet-Draft              HTTP Client Hints               October 2019
-
-
    Yoav Weiss
    Google
 
@@ -578,39 +557,4 @@ Internet-Draft              HTTP Client Hints               October 2019
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Grigorik & Weiss           Expires May 3, 2020                 [Page 11]
+Grigorik & Weiss           Expires May 3, 2020                 [Page 10]
