@@ -297,8 +297,8 @@ Content-Encoding: gzip
 Finally the semantics of an HTTP response may decouple
 the effective request URI
 from the enclosed representation.
-In the example below, the `Content-Location` metadata header field
-explicits that the representation enclosed in the response
+In the example response below, the `Content-Location` header field
+indicates that the enclosed representation
 refers to the resource available at `/authors/123`.
 
 Request:
