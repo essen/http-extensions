@@ -826,7 +826,7 @@ Even a simple mechanism for end-to-end validation is thus valuable.
 
 ## Digest and Content-Location in responses {#digest-and-content-location}
 
-When a state-changing method returns the `Content-Location` metadata header field,
+When a state-changing method returns the `Content-Location` header field,
 the enclosed representation refers to the resource identified by its value
 and `Digest` is computed accordingly.
 
