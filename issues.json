@@ -64,7 +64,7 @@
     "id": 515680427,
     "node_id": "MDExOlB1bGxSZXF1ZXN0MzM1MTAwMzcz",
     "number": 971,
-    "title": "[wip] digest: editorial sweep and address use cases and SRI",
+    "title": "digest: editorial sweep and address use cases and SRI",
     "user": {
       "login": "LPardue",
       "id": 6571445,
@@ -97,7 +97,7 @@
     "milestone": null,
     "comments": 2,
     "created_at": "2019-10-31T19:16:42Z",
-    "updated_at": "2019-10-31T20:19:30Z",
+    "updated_at": "2019-11-01T19:29:40Z",
     "closed_at": null,
     "author_association": "CONTRIBUTOR",
     "pull_request": {
