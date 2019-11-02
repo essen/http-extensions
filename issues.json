@@ -2825,7 +2825,7 @@
         "default": false
       }
     ],
-    "state": "open",
+    "state": "closed",
     "locked": false,
     "assignee": null,
     "assignees": [
@@ -2834,8 +2834,8 @@
     "milestone": null,
     "comments": 4,
     "created_at": "2019-09-06T09:47:28Z",
-    "updated_at": "2019-10-31T17:20:51Z",
-    "closed_at": null,
+    "updated_at": "2019-11-02T18:32:21Z",
+    "closed_at": "2019-11-02T18:32:20Z",
     "author_association": "CONTRIBUTOR",
     "pull_request": {
       "url": "https://api.github.com/repos/httpwg/http-extensions/pulls/923",
@@ -2843,7 +2843,7 @@
       "diff_url": "https://github.com/httpwg/http-extensions/pull/923.diff",
       "patch_url": "https://github.com/httpwg/http-extensions/pull/923.patch"
     },
-    "body": "## This PR\r\n\r\nClarifies the relations b/w Digest,  PATCH and POST:\r\n\r\n- PATCH and POST does not convey partial representations;\r\n- they instead specify actions on resources\r\n\r\nIn requests:\r\n- Digest should refer to the representation-data of the action\r\n\r\nIn responses:\r\n- if the enclosed representation refers to the status of the action, then it's complete and Digest is computed on it;\r\n- if the enclosed representation referers to another resource (eg. via content-location), Digest is computed on the selected representation of that resource;\r\n- the above is true even in case of an empty payload body.\r\n\r\n## Note\r\n\r\n-  [ ] depends on #937 \r\n- [ ]  TODO give an example that failed and that returns the Digest and etag of the unpatch item (if that is what happens)."
+    "body": "## This PR\r\n\r\nClarifies the relations b/w Digest,  PATCH and POST:\r\n\r\n- PATCH and POST does not convey partial representations;\r\n- they instead specify actions on resources\r\n\r\nIn requests:\r\n- Digest should refer to the representation-data of the action\r\n\r\nIn responses:\r\n- if the enclosed representation refers to the status of the action, then it's complete and Digest is computed on it;\r\n- if the enclosed representation referers to another resource (eg. via content-location), Digest is computed on the selected representation of that resource;\r\n- the above is true even in case of an empty payload body.\r\n"
   },
   {
     "url": "https://api.github.com/repos/httpwg/http-extensions/issues/922",
@@ -6955,7 +6955,7 @@
         "default": false
       }
     ],
-    "state": "open",
+    "state": "closed",
     "locked": false,
     "assignee": null,
     "assignees": [
@@ -6964,8 +6964,8 @@
     "milestone": null,
     "comments": 15,
     "created_at": "2019-07-10T09:53:46Z",
-    "updated_at": "2019-09-26T10:14:04Z",
-    "closed_at": null,
+    "updated_at": "2019-11-02T18:32:22Z",
+    "closed_at": "2019-11-02T18:32:22Z",
     "author_association": "CONTRIBUTOR",
     "body": "## About PATCH\r\n\r\n1- `PATCH` is not in http 723x\r\n2- `PATCH` media type should be something like https://tools.ietf.org/html/rfc7396 because \r\nservers SHOULD NOT assume PATCH semantics for generic\r\n   media types that don't define them, such as \"application/xml\" or\r\n   \"application/json\".  Doing so will cause interoperability issues,\r\n   because the semantics of PATCH become specific to that resource,\r\n   rather than general.\r\n3- it's difficult to use patch + checksums, like @LPardue said\r\n\r\n## As of now we\r\n\r\n1- warn people about PATCH+Digest\r\n2- don't forbid PATCH+Digest\r\n\r\n## Notes\r\n\r\n-  it could be useful to validate the PATCH request body before applying it to the resource\r\n- guidance of the usage of Digest+PATCH is welcome to confirm  if the current expression of Digest support that use."
   },
