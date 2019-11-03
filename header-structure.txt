@@ -441,7 +441,7 @@ Internet-Draft         Structured Headers for HTTP         November 2019
    A header field whose value is defined as a list of inner-lists with
    parameters at both levels could look like:
 
-   Example-ListListParam: ("foo"; a=1;b=2);lvl=5, ("bar", "baz");lvl=1
+   Example-ListListParam: ("foo"; a=1;b=2);lvl=5, ("bar" "baz");lvl=1
 
 
 
