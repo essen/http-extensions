@@ -1668,7 +1668,7 @@ D.1.  Since draft-ietf-httpbis-digest-headers-00
 
    o  Align title with document name
 
-   o  Add id-sha-* algorithm examples
+   o  Add id-sha-* algorithm examples #880
 
    o  Reference [RFC6234] and [RFC3174] instead of FIPS-1
 
@@ -1682,9 +1682,13 @@ Polli & Pardue             Expires May 6, 2020                 [Page 30]
 Internet-Draft               Digest Headers                November 2019
 
 
-   o  Obsolete ADLER-32 but don't forbid it
+   o  Obsolete ADLER-32 but don't forbid it #828
 
-   o  Update CRC32C value in IANA table
+   o  Update CRC32C value in IANA table #828
+
+   o  Use when acting on resources (POST, PATCH) #853
+
+   o  Added Relationship with SRI, draft Use Cases #868, #971
 
 Authors' Addresses
 
@@ -1699,10 +1703,6 @@ Authors' Addresses
    Cloudflare
 
    Email: lucaspardue.24.7@gmail.com
-
-
-
-
 
 
 
