@@ -1230,9 +1230,9 @@
 
     ],
     "milestone": null,
-    "comments": 7,
+    "comments": 8,
     "created_at": "2019-10-25T05:45:00Z",
-    "updated_at": "2019-10-30T03:49:51Z",
+    "updated_at": "2019-11-05T18:57:48Z",
     "closed_at": null,
     "author_association": "MEMBER",
     "body": "* [x] inner-list ABNF specifies single SP, but parsing eats OWS\r\n* [x] token doesn't allow +, which is common in media types. Other chars too?\r\n* [x] explicitly talk about parameter extensibility\r\n* [x] revise authoring advice\r\n* [ ] check all examples for parseability\r\n* [x] summarise the relationships between the datatypes (e.g., in an intro subsection)\r\n"
