@@ -48,9 +48,9 @@
 
     ],
     "milestone": null,
-    "comments": 1,
+    "comments": 5,
     "created_at": "2019-11-11T23:44:04Z",
-    "updated_at": "2019-11-11T23:53:22Z",
+    "updated_at": "2019-11-12T00:12:13Z",
     "closed_at": null,
     "author_association": "MEMBER",
     "body": "... is written as if you can infer the header type from the type of the input data. That isn't true any more; we probably need something like the parse algo's concept of `header_type`."
@@ -1394,9 +1394,9 @@
 
     ],
     "milestone": null,
-    "comments": 12,
+    "comments": 17,
     "created_at": "2019-10-25T05:45:00Z",
-    "updated_at": "2019-11-07T14:33:02Z",
+    "updated_at": "2019-11-12T08:54:13Z",
     "closed_at": null,
     "author_association": "MEMBER",
     "body": "* [x] inner-list ABNF specifies single SP, but parsing eats OWS\r\n* [x] token doesn't allow +, which is common in media types. Other chars too?\r\n* [x] explicitly talk about parameter extensibility\r\n* [x] revise authoring advice\r\n* [ ] check all examples for parseability\r\n* [x] summarise the relationships between the datatypes (e.g., in an intro subsection)\r\n"
