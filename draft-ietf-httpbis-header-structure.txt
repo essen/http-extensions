@@ -1461,8 +1461,8 @@ Internet-Draft         Structured Headers for HTTP         November 2019
         1.  Parse input_number as an integer and let output_number be
             the product of the result and sign.
 
-        2.  If output_number is outside the range defined in
-            Section 3.3.1, fail parsing.
+        2.  If output_number is outside the range -999,999,999,999,999
+            to 999,999,999,999,999 inclusive, fail parsing.
 
    9.   Otherwise:
 
