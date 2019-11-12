@@ -105,7 +105,7 @@ Table of Contents
      B.2.  Structured Headers don't "fit" my data. . . . . . . . . .  33
    Appendix C.  Implementation Notes . . . . . . . . . . . . . . . .  33
    Appendix D.  Changes  . . . . . . . . . . . . . . . . . . . . . .  34
-     D.1.  Since draft-ietf-httpbis-header-structure-13  . . . . . .  34
+     D.1.  Since draft-ietf-httpbis-header-structure-14  . . . . . .  34
 
 
 
@@ -114,19 +114,20 @@ Nottingham & Kamp         Expires May 15, 2020                  [Page 2]
 Internet-Draft         Structured Headers for HTTP         November 2019
 
 
-     D.2.  Since draft-ietf-httpbis-header-structure-12  . . . . . .  34
-     D.3.  Since draft-ietf-httpbis-header-structure-11  . . . . . .  34
-     D.4.  Since draft-ietf-httpbis-header-structure-10  . . . . . .  34
-     D.5.  Since draft-ietf-httpbis-header-structure-09  . . . . . .  35
-     D.6.  Since draft-ietf-httpbis-header-structure-08  . . . . . .  35
-     D.7.  Since draft-ietf-httpbis-header-structure-07  . . . . . .  35
-     D.8.  Since draft-ietf-httpbis-header-structure-06  . . . . . .  36
-     D.9.  Since draft-ietf-httpbis-header-structure-05  . . . . . .  36
-     D.10. Since draft-ietf-httpbis-header-structure-04  . . . . . .  36
-     D.11. Since draft-ietf-httpbis-header-structure-03  . . . . . .  36
-     D.12. Since draft-ietf-httpbis-header-structure-02  . . . . . .  36
-     D.13. Since draft-ietf-httpbis-header-structure-01  . . . . . .  37
-     D.14. Since draft-ietf-httpbis-header-structure-00  . . . . . .  37
+     D.2.  Since draft-ietf-httpbis-header-structure-13  . . . . . .  34
+     D.3.  Since draft-ietf-httpbis-header-structure-12  . . . . . .  34
+     D.4.  Since draft-ietf-httpbis-header-structure-11  . . . . . .  34
+     D.5.  Since draft-ietf-httpbis-header-structure-10  . . . . . .  34
+     D.6.  Since draft-ietf-httpbis-header-structure-09  . . . . . .  35
+     D.7.  Since draft-ietf-httpbis-header-structure-08  . . . . . .  35
+     D.8.  Since draft-ietf-httpbis-header-structure-07  . . . . . .  36
+     D.9.  Since draft-ietf-httpbis-header-structure-06  . . . . . .  36
+     D.10. Since draft-ietf-httpbis-header-structure-05  . . . . . .  36
+     D.11. Since draft-ietf-httpbis-header-structure-04  . . . . . .  36
+     D.12. Since draft-ietf-httpbis-header-structure-03  . . . . . .  37
+     D.13. Since draft-ietf-httpbis-header-structure-02  . . . . . .  37
+     D.14. Since draft-ietf-httpbis-header-structure-01  . . . . . .  37
+     D.15. Since draft-ietf-httpbis-header-structure-00  . . . . . .  37
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  37
 
 1.  Introduction
@@ -161,7 +162,6 @@ Internet-Draft         Structured Headers for HTTP         November 2019
    intended to be used with headers that explicitly opt into them.
 
    Section 2 describes how to specify a Structured Header.
-
 
 
 
@@ -365,7 +365,7 @@ Internet-Draft         Structured Headers for HTTP         November 2019
 
    For example:
 
-     Foo-Example: 2; fooUrl="https://foo.example.com/"
+     Foo-Example: 2; foourl="https://foo.example.com/"
 
 3.  Structured Data Types
 
@@ -1811,7 +1811,7 @@ B.2.  Structured Headers don't "fit" my data.
    Since the description contains an array of key/value pairs, we use a
    List to represent them, with the token for each item in the array
    used to identify it in the "descriptions" member of the Example-Thing
-   header.
+   dictionary header.
 
    When specifying more than one header, it's important to remember to
    describe what a processor's behaviour should be when one of the
@@ -1854,7 +1854,11 @@ Appendix D.  Changes
 
    _RFC Editor: Please remove this section before publication._
 
-D.1.  Since draft-ietf-httpbis-header-structure-13
+D.1.  Since draft-ietf-httpbis-header-structure-14
+
+   o  Editorial improvements.
+
+D.2.  Since draft-ietf-httpbis-header-structure-13
 
    o  Editorial improvements.
 
@@ -1872,7 +1876,7 @@ D.1.  Since draft-ietf-httpbis-header-structure-13
 
    o  Disallow OWS before ";" delimiter in parameters (#961).
 
-D.2.  Since draft-ietf-httpbis-header-structure-12
+D.3.  Since draft-ietf-httpbis-header-structure-12
 
    o  Editorial improvements.
 
@@ -1880,7 +1884,7 @@ D.2.  Since draft-ietf-httpbis-header-structure-12
 
    o  Don't add a trailing space in inner-list (#904).
 
-D.3.  Since draft-ietf-httpbis-header-structure-11
+D.4.  Since draft-ietf-httpbis-header-structure-11
 
    o  Allow * in key (#844).
 
@@ -1888,16 +1892,12 @@ D.3.  Since draft-ietf-httpbis-header-structure-11
 
    o  Allow dictionary members to have parameters (#842).
 
-D.4.  Since draft-ietf-httpbis-header-structure-10
+D.5.  Since draft-ietf-httpbis-header-structure-10
 
    o  Update abstract (#799).
 
    o  Input and output are now arrays of bytes (#662).
 
-   o  Implementations need to preserve difference between token and
-      string (#790).
-
-   o  Allow empty dictionaries and lists (#781).
 
 
 
@@ -1906,6 +1906,11 @@ Nottingham & Kamp         Expires May 15, 2020                 [Page 34]
 Internet-Draft         Structured Headers for HTTP         November 2019
 
 
+   o  Implementations need to preserve difference between token and
+      string (#790).
+
+   o  Allow empty dictionaries and lists (#781).
+
    o  Change parameterized lists to have primary items (#797).
 
    o  Allow inner lists in both dictionaries and lists; removes lists of
@@ -1913,7 +1918,7 @@ Internet-Draft         Structured Headers for HTTP         November 2019
 
    o  Subsume Parameterised Lists into Lists (#839).
 
-D.5.  Since draft-ietf-httpbis-header-structure-09
+D.6.  Since draft-ietf-httpbis-header-structure-09
 
    o  Changed Boolean from T/F to 1/0 (#784).
 
@@ -1921,7 +1926,7 @@ D.5.  Since draft-ietf-httpbis-header-structure-09
 
    o  Clamp integers to 15 digits (#737).
 
-D.6.  Since draft-ietf-httpbis-header-structure-08
+D.7.  Since draft-ietf-httpbis-header-structure-08
 
    o  Disallow whitespace before items properly (#703).
 
@@ -1945,14 +1950,9 @@ D.6.  Since draft-ietf-httpbis-header-structure-08
 
    o  Add implementation guidance (#727).
 
-D.7.  Since draft-ietf-httpbis-header-structure-07
 
-   o  Make Dictionaries ordered mappings (#659).
 
-   o  Changed "binary content" to "byte sequence" to align with Infra
-      specification (#671).
 
-   o  Changed "mapping" to "map" for #671.
 
 
 
@@ -1961,6 +1961,15 @@ Nottingham & Kamp         Expires May 15, 2020                 [Page 35]
 
 Internet-Draft         Structured Headers for HTTP         November 2019
 
+
+D.8.  Since draft-ietf-httpbis-header-structure-07
+
+   o  Make Dictionaries ordered mappings (#659).
+
+   o  Changed "binary content" to "byte sequence" to align with Infra
+      specification (#671).
+
+   o  Changed "mapping" to "map" for #671.
 
    o  Don't fail if byte sequences aren't "=" padded (#658).
 
@@ -1973,7 +1982,7 @@ Internet-Draft         Structured Headers for HTTP         November 2019
    o  Explain the consequences of splitting a string across multiple
       headers (#686).
 
-D.8.  Since draft-ietf-httpbis-header-structure-06
+D.9.  Since draft-ietf-httpbis-header-structure-06
 
    o  Add a FAQ.
 
@@ -1981,7 +1990,7 @@ D.8.  Since draft-ietf-httpbis-header-structure-06
 
    o  Explicitly check for integers that violate constraints.
 
-D.9.  Since draft-ietf-httpbis-header-structure-05
+D.10.  Since draft-ietf-httpbis-header-structure-05
 
    o  Reorganise specification to separate parsing out.
 
@@ -1992,7 +2001,7 @@ D.9.  Since draft-ietf-httpbis-header-structure-05
    o  Refine relationship between ABNF, parsing and serialisation
       algorithms.
 
-D.10.  Since draft-ietf-httpbis-header-structure-04
+D.11.  Since draft-ietf-httpbis-header-structure-04
 
    o  Remove identifiers from item.
 
@@ -2000,15 +2009,6 @@ D.10.  Since draft-ietf-httpbis-header-structure-04
 
    o  Refine number parsing.
 
-D.11.  Since draft-ietf-httpbis-header-structure-03
-
-   o  Strengthen language around failure handling.
-
-D.12.  Since draft-ietf-httpbis-header-structure-02
-
-   o  Split Numbers into Integers and Floats.
-
-   o  Define number parsing.
 
 
 
@@ -2017,6 +2017,16 @@ Nottingham & Kamp         Expires May 15, 2020                 [Page 36]
 
 Internet-Draft         Structured Headers for HTTP         November 2019
 
+
+D.12.  Since draft-ietf-httpbis-header-structure-03
+
+   o  Strengthen language around failure handling.
+
+D.13.  Since draft-ietf-httpbis-header-structure-02
+
+   o  Split Numbers into Integers and Floats.
+
+   o  Define number parsing.
 
    o  Tighten up binary parsing and give it an explicit end delimiter.
 
@@ -2032,11 +2042,11 @@ Internet-Draft         Structured Headers for HTTP         November 2019
 
    o  Throw an error on trailing garbage.
 
-D.13.  Since draft-ietf-httpbis-header-structure-01
+D.14.  Since draft-ietf-httpbis-header-structure-01
 
    o  Replaced with draft-nottingham-structured-headers.
 
-D.14.  Since draft-ietf-httpbis-header-structure-00
+D.15.  Since draft-ietf-httpbis-header-structure-00
 
    o  Added signed 64bit integer type.
 
@@ -2054,6 +2064,16 @@ Authors' Addresses
    URI:   https://www.mnot.net/
 
 
+
+
+
+
+
+Nottingham & Kamp         Expires May 15, 2020                 [Page 37]
+
+Internet-Draft         Structured Headers for HTTP         November 2019
+
+
    Poul-Henning Kamp
    The Varnish Cache Project
 
@@ -2069,4 +2089,40 @@ Authors' Addresses
 
 
 
-Nottingham & Kamp         Expires May 15, 2020                 [Page 37]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nottingham & Kamp         Expires May 15, 2020                 [Page 38]
