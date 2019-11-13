@@ -48,9 +48,9 @@
 
     ],
     "milestone": null,
-    "comments": 5,
+    "comments": 8,
     "created_at": "2019-11-11T23:44:04Z",
-    "updated_at": "2019-11-12T00:12:13Z",
+    "updated_at": "2019-11-13T05:55:07Z",
     "closed_at": null,
     "author_association": "MEMBER",
     "body": "... is written as if you can infer the header type from the type of the input data. That isn't true any more; we probably need something like the parse algo's concept of `header_type`."
@@ -157,9 +157,9 @@
 
     ],
     "milestone": null,
-    "comments": 7,
+    "comments": 11,
     "created_at": "2019-11-07T20:19:54Z",
-    "updated_at": "2019-11-09T03:07:50Z",
+    "updated_at": "2019-11-12T21:56:16Z",
     "closed_at": null,
     "author_association": "NONE",
     "body": "(Related to now-closed #896)\r\n\r\nShould implementations be able to store parsed floats in IEEE754 binary64? And if so, should we expect that they round trip between parsing and serialization? It seems like the current limits were designed to support that notion, but there are cases where they do not.\r\n\r\n(Note, this isn't about being able to serialize arbitrary C++ doubles; the spec sensibly only supports a tiny subset of all possible 64-bit floats. This is about whether `x == Serialize(Parse(x))` should always be true)\r\n\r\nIEEE 754 guarantees that if a string with no more than 15 digits is converted to a double and then back to a string, it should result in the original string, but that appears to require rounding in some cases; truncation, which the serialization algorithm calls for, can change the string representation.\r\n\r\nParsing the string \"12345678901234.1\" as a float, for instance, results in a binary64 representation with value 0x42a674e79c5fe433, whose exact decimal expansion is 12345678901234.099609375. Following the text of the serialization algorithm, `fractional_digits_avail` will be 1, and so the number will be serialized as \"12345678901234.0\"\r\n\r\nIt appears, as an implementer, that the only way to ensure that a float parsed from a valid string can be serialized back to the original string is to store it as a fixed point decimal in two parts, or else use a float with >64 bits of precision for storage."
@@ -1394,12 +1394,12 @@
 
     ],
     "milestone": null,
-    "comments": 17,
+    "comments": 19,
     "created_at": "2019-10-25T05:45:00Z",
-    "updated_at": "2019-11-12T08:54:13Z",
+    "updated_at": "2019-11-12T10:52:58Z",
     "closed_at": null,
     "author_association": "MEMBER",
-    "body": "* [x] inner-list ABNF specifies single SP, but parsing eats OWS\r\n* [x] token doesn't allow +, which is common in media types. Other chars too?\r\n* [x] explicitly talk about parameter extensibility\r\n* [x] revise authoring advice\r\n* [ ] check all examples for parseability\r\n* [x] summarise the relationships between the datatypes (e.g., in an intro subsection)\r\n"
+    "body": "* [x] inner-list ABNF specifies single SP, but parsing eats OWS\r\n* [x] token doesn't allow +, which is common in media types. Other chars too?\r\n* [x] explicitly talk about parameter extensibility\r\n* [x] revise authoring advice\r\n* [x] check all examples for parseability\r\n* [x] summarise the relationships between the datatypes (e.g., in an intro subsection)\r\n"
   },
   {
     "url": "https://api.github.com/repos/httpwg/http-extensions/issues/960",
